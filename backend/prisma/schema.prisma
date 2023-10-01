@@ -20,4 +20,30 @@ model Users {
   adminBy String
   lastLogged String
   createdAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model Products {
+  id String @id @default(uuid())
+  productID String
+  productName String
+  description String
+  price Float
+  createdBy String
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+
+  categoryId String
+  category Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String
+  description String
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+
+  // relationship
+  products Products[]
 }
