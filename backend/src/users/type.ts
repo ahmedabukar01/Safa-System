@@ -1,7 +1,6 @@
 import { GraphQLID, GraphQLInputObjectType, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 
 export type UserType = {
-    id: string
     fullName: string
     role: string
     email: string
