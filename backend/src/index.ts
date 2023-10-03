@@ -41,6 +41,6 @@ startServer()
 
 
 app.listen(PORT, () => {
-    console.log(`Server is Running ${PORT}`)
-    console.log(`Apoll Server is Running ${PORT}/graphql`)
+    console.log(` 🚀 🚀 🚀 Server is Running ${PORT}`)
+    console.log(`🚀 🚀 🚀 Apoll Server is Running ${PORT}/graphql`)
 })
