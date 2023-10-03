@@ -17,9 +17,9 @@ model Users {
   password String 
   role String
   access Boolean
-  adminBy String
-  lastLogged String
-  createdAt DateTime
+  adminBy String?
+  lastLogged String?
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 

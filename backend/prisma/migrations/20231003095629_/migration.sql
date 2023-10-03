@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Users" ALTER COLUMN "adminBy" DROP NOT NULL,
+ALTER COLUMN "lastLogged" DROP NOT NULL;
