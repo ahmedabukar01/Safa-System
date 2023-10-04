@@ -16,13 +16,36 @@
     access: Boolean
   }
 
+  type Payload {
+    id: String
+    token: String,
+    fullName: String
+    role: String
+    access: String
+  }
+
+  type StatusMessage {
+    success: String
+  }
+  input SignInInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
     users: [User!]!
-    user(id: ID!): User!
+    user(id: ID!): User
+
+    # development only
+    clearAll: StatusMessage
   }
   
   type Mutation {
     addUser(input: UserInput!) : User!
+    signIn(input: SignInInput!): Payload
+
+    # super use mutations
+    register(input: UserInput): Payload  
   }
 
 # `;
