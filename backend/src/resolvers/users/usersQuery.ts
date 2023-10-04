@@ -8,11 +8,13 @@ export const usersQuery = {
     user: async (_:any,{id}: uniqueId) => {
         const res = await prisma.users.findUnique({where: {id}})
 
-        if(!res) {
-            return {res: "User Doesn't Exist"}
-        }
+        if(!res) throw new Error("User Doesn't Exists!")
 
-        // return res;
+        return res;
+    },
+    clearAll: async ()=> {
+        const res = await prisma.users.deleteMany()
+        return {success: "All Users Deleted Successfully"}
     }
 }
 
