@@ -1,16 +1,18 @@
 import express, {Request, Response } from "express";
 import dotenv from "dotenv";
-import { GraphQLObjectType, GraphQLSchema } from "graphql";
-import { UserQuery } from "./users/query";
+import { GraphQLError, GraphQLObjectType, GraphQLSchema } from "graphql";
 import { ApolloServer, gql } from "apollo-server-express";
-import { UserMutation } from "./users/mutation";
 import { resolve } from "path";
 import fs from 'fs'
 import prisma from "./database/configDB";
+import { usersQuery } from "./resolvers/users/usersQuery";
+import { usersMutation } from "./resolvers/users/usersMutation";
+import { authMutation } from "./resolvers/auth/authMutation";
+import cookieParser from 'cookie-parser'
+import jwt from 'jsonwebtoken'
+import expressSession from 'express-session'
 
 dotenv.config()
-
-// const express = require("express")
 
 const app = express();
 
@@ -19,100 +21,96 @@ const PORT = process.env.PORT || 8000
 app.use(express.json({limit: '30mb'}));
 app.use(express.urlencoded({limit: '30mb',extended: false}))
 
-// const Query = new GraphQLObjectType({
-//     name: "Query",
-//     description: "teh base Query",
-//     fields: {
-//         user: {
-//             type: UserQuery,
-//             description: UserQuery.description,
-//             resolve: ()=> {return {}}
-//         }
-//     }
-// })
-
-// const Query = new GraphQLObjectType({
-//     name: "Query",
-//     description: "teh base Query",
-//     fields: {
-//         users: {
-//             type: UserQuery,
-//             resolve: () => {return {}}
-//         }
-//     }
-// })
-
-// const Mutation = new GraphQLObjectType({
-//     name: "Mutation",
-//     description: "teh base Mutation",
-//     fields: {
-//         users: {
-//             type: UserMutation,
-//             resolve: () => {return {}}
-//         }
-//     }
-// })
-
-// const schema = new GraphQLSchema({
-//     query: Query,
-//     mutation: Mutation
-// })
-
-// const apolloServer = async () => {
-//     const server = new ApolloServer({
-//         schema
-//     })
-    
-//     await server.start();
-//     server.applyMiddleware({app, path: "/graphql"});
-// }
-
-// apolloServer()
-
-// second chance
-
-type userinput = {
-    fullName: string
-    email: string
-    password: string
-    role: string
-    access: boolean
-  }
-
 const typeDefs = gql`
 ${fs.readFileSync(require.resolve('./schema.graphql'), 'utf-8')}
 `;
 
 const resolvers = {
     Query: {
-        users: (_parent: any, input: any) => {
-            return prisma.users.findMany();
-        }
+        ...usersQuery
     },
     Mutation: {
-        addUser: async (_: any, {input}: any) => {
-            console.log('input', input)
-            
-            const res = await prisma.users.create({
-                data: input
-            })
-            
-            return res
-        }
+        ...usersMutation,
+        ...authMutation
     }
 }
-const server = new ApolloServer({resolvers, typeDefs});
 
-const serversFunc = async () => {
+app.use(cookieParser())
+
+const server = new ApolloServer({
+    resolvers, 
+    typeDefs,
+    context: async ({req, res}) => { 
+
+        // be care full in these auth, //@ you should improve it and test it.
+        
+        let token;
+
+        if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+            try {
+                token = req?.headers?.authorization?.split(' ')[1];
+
+                if(!token?.length) return {req, res};  // i did this just to prevent the server to crash out. or not to stop. cuz if i use throw new error or graphqlError the server won't work and throws error because it's in the context.
+
+
+                const decoded: any = jwt.verify(token, process.env.WHOAREYOU!);
+
+                // if(!decoded) return new GraphQLError("invalid jsonwebtoken");
+
+                const user = await prisma.users.findUnique({
+                    where: {id: decoded.id},
+                    select: {
+                        access: true,
+                        id: true,
+                        role: true,
+                        email: true,
+                        fullName: true,
+                        adminBy: true,
+                    }
+                })
+
+                return {req, res, user}
+
+            } catch (error) {
+                console.error(error);
+                // res.json({error: "unathorized user or InValid Token / Signature"})
+                throw new GraphQLError('unathorized user')
+            }
+        }
+
+        if(!token){
+            // res.status(401);
+            // throw new Error('no authorized no token!')
+        }
+
+        return {req, res}
+    }
+
+});
+
+// app.use(
+//     expressSession({
+//         name: "id",
+//         secret: process.env.WHOAREYOU!,
+//         resave: false,
+//         saveUninitialized: false,
+//         cookie: {
+//             httpOnly: true,
+//             maxAge: 1000 * 60 * 60 * 24 * 7
+//         }
+//     })
+// )
+
+const startServer = async () => {
 await server.start()
 await server.applyMiddleware({ app})
 
 }
 
-serversFunc()
+startServer()
 
 
 app.listen(PORT, () => {
-    console.log(`Server is Running ${PORT}`)
-    console.log(`Apoll Server is Running ${PORT}/graphql`)
+    console.log(` 🚀 🚀 🚀 Server is Running ${PORT}`)
+    console.log(`🚀 🚀 🚀 Apoll Server is Running ${PORT}/graphql`)
 })
