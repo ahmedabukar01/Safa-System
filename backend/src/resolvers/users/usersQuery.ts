@@ -1,12 +1,19 @@
+import { GraphQLError } from "graphql";
 import prisma from "../../database/configDB";
 import { uniqueId } from "../types";
+import { adminOnly, auth } from "../../utils/auth";
 
 export const usersQuery = {
     users: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
 
         console.log('user', user)
+
+        auth(user)
+        adminOnly(user)
+
         return prisma.users.findMany();
     },
+
     user: async (_:any,{id}: uniqueId, {req, res, user} : any) => {
         const SingleUser = await prisma.users.findUnique({where: {id}})
 
