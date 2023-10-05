@@ -2,15 +2,17 @@ import prisma from "../../database/configDB";
 import { uniqueId } from "../types";
 
 export const usersQuery = {
-    users: () => {
+    users: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
+
+        console.log('user', user)
         return prisma.users.findMany();
     },
-    user: async (_:any,{id}: uniqueId) => {
-        const res = await prisma.users.findUnique({where: {id}})
+    user: async (_:any,{id}: uniqueId, {req, res, user} : any) => {
+        const SingleUser = await prisma.users.findUnique({where: {id}})
 
-        if(!res) throw new Error("User Doesn't Exists!")
+        if(!SingleUser) throw new Error("User Doesn't Exists!")
 
-        return res;
+        return SingleUser;
     },
     clearAll: async ()=> {
         const res = await prisma.users.deleteMany()

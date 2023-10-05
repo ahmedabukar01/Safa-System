@@ -48,6 +48,7 @@ export const authMutation = {
         const user = await prisma.users.findUnique({where: {email}})
 
         if(user && (await bcrypt.compare(password, user.password))){
+            
             const token = await createTokens(user.id);
 
             return {

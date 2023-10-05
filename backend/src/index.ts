@@ -1,6 +1,6 @@
 import express, {Request, Response } from "express";
 import dotenv from "dotenv";
-import { GraphQLObjectType, GraphQLSchema } from "graphql";
+import { GraphQLError, GraphQLObjectType, GraphQLSchema } from "graphql";
 import { ApolloServer, gql } from "apollo-server-express";
 import { resolve } from "path";
 import fs from 'fs'
@@ -41,32 +41,47 @@ const server = new ApolloServer({
     resolvers, 
     typeDefs,
     context: async ({req, res}) => { 
+
+        // be care full in these auth, //@ you should improve it and test it.
         
         let token;
 
         if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
             try {
-                token = req.headers.authorization.split(' ')[1];
+                token = req?.headers?.authorization?.split(' ')[1];
+
+                if(!token?.length) return {req, res};  // i did this just to prevent the server to crash out. or not to stop. cuz if i use throw new error or graphqlError the server won't work and throws error because it's in the context.
+
 
                 const decoded: any = jwt.verify(token, process.env.WHOAREYOU!);
 
-                const user = await prisma.users.findUnique({where: {id: decoded.id}})
+                // if(!decoded) return new GraphQLError("invalid jsonwebtoken");
+
+                const user = await prisma.users.findUnique({
+                    where: {id: decoded.id},
+                    select: {
+                        access: true,
+                        id: true,
+                        role: true,
+                        email: true,
+                        fullName: true,
+                        adminBy: true,
+                    }
+                })
 
                 return {req, res, user}
 
             } catch (error) {
                 console.error(error);
-                res.status(401);
-                throw new Error('unathorized user')
+                // res.json({error: "unathorized user or InValid Token / Signature"})
+                throw new GraphQLError('unathorized user')
             }
         }
 
         if(!token){
-            res.status(401);
-            throw new Error('no authorized no token!')
+            // res.status(401);
+            // throw new Error('no authorized no token!')
         }
-
-        // console.log('here the last line in context')
 
         return {req, res}
     }
