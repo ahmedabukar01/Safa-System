@@ -1,16 +1,25 @@
+import { GraphQLError } from "graphql";
 import prisma from "../../database/configDB";
 import { uniqueId } from "../types";
+import { adminOnly, auth } from "../../utils/auth";
 
 export const usersQuery = {
-    users: () => {
+    users: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
+
+        console.log('user', user)
+
+        auth(user)
+        adminOnly(user)
+
         return prisma.users.findMany();
     },
-    user: async (_:any,{id}: uniqueId) => {
-        const res = await prisma.users.findUnique({where: {id}})
 
-        if(!res) throw new Error("User Doesn't Exists!")
+    user: async (_:any,{id}: uniqueId, {req, res, user} : any) => {
+        const SingleUser = await prisma.users.findUnique({where: {id}})
 
-        return res;
+        if(!SingleUser) throw new Error("User Doesn't Exists!")
+
+        return SingleUser;
     },
     clearAll: async ()=> {
         const res = await prisma.users.deleteMany()
