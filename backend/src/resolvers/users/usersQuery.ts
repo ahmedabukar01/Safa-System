@@ -1,7 +1,7 @@
 import { GraphQLError } from "graphql";
 import prisma from "../../database/configDB";
 import { uniqueId } from "../types";
-import { adminOnly, auth } from "../../utils/auth";
+import { auth, superAdmin } from "../../utils/auth";
 
 export const usersQuery = {
     users: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
@@ -9,7 +9,7 @@ export const usersQuery = {
         console.log('user', user)
 
         auth(user)
-        adminOnly(user)
+        superAdmin(user)
 
         return prisma.users.findMany();
     },

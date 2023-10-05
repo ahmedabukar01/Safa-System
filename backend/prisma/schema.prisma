@@ -10,6 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ENUMS
+  enum ROLE {
+    ADMIN
+    SUPER_ADMIN
+    USER 
+    MODERATOR
+  }
+
+// MODELS
+
 model Users {
   id String @id @default(uuid())
   fullName String
