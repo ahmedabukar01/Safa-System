@@ -43,6 +43,15 @@
     email: String!
     password: String!
   }
+  input CategoryInput {
+    name: String!
+    description: String
+  }
+
+  input UpdateCategoryInput {
+    id: String!,
+    data: CategoryInput
+  }
 
   type StatusMessage {
     success: String
@@ -59,6 +68,8 @@
   type Query {
     users: [User!]!
     user(id: ID!): User
+    categories: [Category]
+    category(id: ID!): Category
 
     # development only
     clearAll: StatusMessage
@@ -67,6 +78,10 @@
   type Mutation {
     addUser(input: UserInput!) : User!
     signIn(input: SignInInput!): Payload
+    createCategory(input: CategoryInput!): Category
+    updateCategory(input: UpdateCategoryInput): Category
+    deleteCategory(id: ID!): StatusMessage
+
 
     # super user mutations
     register(input: UserInput): Payload  
