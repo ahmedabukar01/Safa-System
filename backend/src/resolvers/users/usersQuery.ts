@@ -22,7 +22,8 @@ export const usersQuery = {
         return SingleUser;
     },
     clearAll: async ()=> {
-        const res = await prisma.users.deleteMany()
+        await prisma.users.deleteMany()
+        await prisma.category.deleteMany()
         return {success: "All Users Deleted Successfully"}
     }
 }

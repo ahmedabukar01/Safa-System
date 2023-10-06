@@ -4,6 +4,7 @@
     fullName: String!
     role: Role!
     email: String!
+    adminBy: String
     password: String!
     access: Boolean
     createdAt: String
@@ -26,6 +27,7 @@
     id: String
     name: String
     description: String
+    createdBy: String
     products: [Product]
     createdAt: String
     updatedAt: String
@@ -37,6 +39,11 @@
     password: String!
     role: Role!
     access: Boolean
+  }
+
+  input UserInputWithAdminId {
+    adminBy: String!
+    data: UserInput
   }
 
   input SignInInput {
@@ -76,7 +83,7 @@
   }
   
   type Mutation {
-    addUser(input: UserInput!) : User!
+    addUser(input: UserInputWithAdminId!) : User!
     signIn(input: SignInInput!): Payload
     createCategory(input: CategoryInput!): Category
     updateCategory(input: UpdateCategoryInput): Category
