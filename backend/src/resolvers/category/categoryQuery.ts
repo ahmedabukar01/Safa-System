@@ -20,10 +20,11 @@ export const categoryQuery = {
         auth(user)
 
         const { id } = input
+        const yours = getYourData(user);
 
         const category = await prisma.category.findUnique({where: {
             id: id,
-            createdBy: user.id
+            createdBy: yours
         }})
 
         return category;
