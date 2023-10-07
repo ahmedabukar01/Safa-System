@@ -9,7 +9,6 @@ export const getYourData = (user: any) => {
     }
 
     else if(user.role === 'USER'){
-        console.log('here user')
         return user.adminBy;
     }
     else {

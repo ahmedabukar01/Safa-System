@@ -55,9 +55,15 @@
     description: String
   }
 
+# becuase of this, name is required in category input creation.
+  input UpdateCategory {
+    name: String
+    description: String
+  }
+
   input UpdateCategoryInput {
     id: String!,
-    data: CategoryInput
+    data: UpdateCategory
   }
 
   type StatusMessage {
