@@ -11,8 +11,35 @@ export const auth = (user: any) => {
 
 }
 
+
+// improve little bit 
+
 export const adminOnly = (user: any) => {
-    if(user.role !== 'Admin') throw new GraphQLError("You'va no access to this", {
+
+    // if(user.role !== 'SUPER_ADMIN' || user.role !== 'ADMIN'){
+
+    //     throw new GraphQLError("You'va no access to this", {
+    //         extensions: {
+    //             code: 'UNAUTHORIZED',
+    //             http: {status: 401}
+    //         }
+    //     })
+    // } 
+
+    if(user.role === 'SUPER_ADMIN') return 
+    else if(user.role === 'ADMIN') return 
+    else {
+        throw new GraphQLError("You'va no access to this", {
+            extensions: {
+                code: 'UNAUTHORIZED',
+                http: {status: 401}
+            }
+        })
+    }
+}
+
+export const superAdmin = (user: any) => {
+    if(user.role !== 'SUPER_ADMIN') throw new GraphQLError("You'va no access to this", {
         extensions: {
             code: 'UNAUTHORIZED',
             http: {status: 401}

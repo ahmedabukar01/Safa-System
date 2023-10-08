@@ -2,18 +2,88 @@
  type User {
     id: ID!
     fullName: String!
-    role: String!
+    role: Role!
     email: String!
+    adminBy: String
     password: String!
     access: Boolean
+    createdAt: String
+    updatedAt: String
  }
 
- input UserInput {
+  type Product {
+  id: String
+  productID: String
+  productName: String
+  description: String
+  price: Float
+  category: Category
+  createdBy: String
+  createdAt: String
+  updatedAt: String
+  }
+
+  type Category {
+    id: String
+    name: String
+    description: String
+    createdBy: String
+    products: [Product]
+    createdAt: String
+    updatedAt: String
+  }
+
+   input UserInput {
     fullName: String!
     email: String!
     password: String!
-    role: String!
+    role: Role!
     access: Boolean
+  }
+
+  input UserInputWithAdminId {
+    adminBy: String!
+    data: UserInput
+  }
+
+  input SignInInput {
+    email: String!
+    password: String!
+  }
+  input CategoryInput {
+    name: String!
+    description: String
+  }
+
+# becuase of this, name is required in category input creation.
+  input UpdateCategory {
+    name: String
+    description: String
+  }
+
+  input UpdateCategoryInput {
+    id: String!,
+    data: UpdateCategory
+  }
+
+  input ProductInput {
+  productID: String!
+  productName: String!
+  description: String
+  price: Float!
+  categoryId: String!
+  }
+
+  input UpdateProductInput {
+  productID: String
+  productName: String
+  description: String
+  price: Float
+  categoryId: String
+  }
+
+  type StatusMessage {
+    success: String
   }
 
   type Payload {
@@ -24,28 +94,39 @@
     access: String
   }
 
-  type StatusMessage {
-    success: String
-  }
-  input SignInInput {
-    email: String!
-    password: String!
-  }
-
   type Query {
     users: [User!]!
     user(id: ID!): User
+    categories: [Category]
+    category(id: ID!): Category
+    products: [Product]!
+    product(id: ID!): Product
 
     # development only
     clearAll: StatusMessage
   }
   
   type Mutation {
-    addUser(input: UserInput!) : User!
+    addUser(input: UserInputWithAdminId!) : User!
     signIn(input: SignInInput!): Payload
+    createCategory(input: CategoryInput!): Category
+    updateCategory(input: UpdateCategoryInput): Category
+    deleteCategory(id: ID!): StatusMessage
+    createProduct(input: ProductInput!): Product
+    updateProduct(input: UpdateProductInput): Product
+    deleteProduct(id: ID!): StatusMessage
 
-    # super use mutations
+
+    # super user mutations
     register(input: UserInput): Payload  
   }
+
+  enum Role {
+    ADMIN
+    SUPER_ADMIN
+    USER 
+    MODERATOR
+  }
+
 
 # `;

@@ -11,6 +11,10 @@ import { authMutation } from "./resolvers/auth/authMutation";
 import cookieParser from 'cookie-parser'
 import jwt from 'jsonwebtoken'
 import expressSession from 'express-session'
+import { categoryMutation } from "./resolvers/category/categoryMutation";
+import { categoryQuery } from "./resolvers/category/categoryQuery";
+import { productQueries } from "./resolvers/product/productQueries";
+import { productMutaion } from "./resolvers/product/productMuations";
 
 dotenv.config()
 
@@ -27,11 +31,15 @@ ${fs.readFileSync(require.resolve('./schema.graphql'), 'utf-8')}
 
 const resolvers = {
     Query: {
-        ...usersQuery
+        ...usersQuery,
+        ...categoryQuery,
+        ...productQueries
     },
     Mutation: {
         ...usersMutation,
-        ...authMutation
+        ...authMutation,
+        ...categoryMutation,
+        ...productMutaion
     }
 }
 
