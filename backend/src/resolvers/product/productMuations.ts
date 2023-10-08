@@ -4,25 +4,36 @@ import { adminOnly, auth } from "../../utils/auth"
 import { getYourData } from "../../utils/getYourData";
 import { Prisma } from "@prisma/client";
 
-export const categoryMutation = {
-    createCategory: async (_:any, {input}: any, {__, ___, user}: any) => {
+export const productMutaion = {
+    createProduct: async (_:any, {input}: any, {__, ___, user}: any) => {
     
         console.log('the user ',user)
+        console.log('the input', input)
+
         auth(user);
         adminOnly(user)
 
+        const {categoryId, ...rest} = input
+
         try {
-            
-        const data = await prisma.category.create({
-            data: {
-                ...input,
-                createdBy: user.id
+            const data = await prisma.products.create({
+                data: {
+                    ...rest,
+                    createdBy: user.id,
+                    categoryId: categoryId
+                },
+                include: {
+                    category: true
+                }
             }
-        })
+            )
+    
+            console.log('data', data)
 
-        return data
-
+            return data
         } catch (error) {
+
+            // this Prisma is not prisma (instance of prisma client).
             if(error instanceof Prisma.PrismaClientKnownRequestError){
                 if(error.code === 'P2002'){
                     throw new GraphQLError("Unique Constraint violation, Product name or Product ID already Existed!",{
@@ -31,9 +42,8 @@ export const categoryMutation = {
                 }
             }
         }
-
     },
-    updateCategory: async (_:any, {input}: any, {__, ___, user}: any) => {
+    updateProduct: async (_:any, {input}: any, {__, ___, user}: any) => {
         console.log('user', user)
         auth(user);
         adminOnly(user)
@@ -42,7 +52,7 @@ export const categoryMutation = {
         const yours = getYourData(user)
 
         try {
-            const updatedCategory = await prisma.category.update({
+            const updatedCategory = await prisma.products.update({
                 where: {
                     id: id,
                     createdBy: yours
@@ -60,7 +70,7 @@ export const categoryMutation = {
 
 
     },
-    deleteCategory: async (_:any, {id}: any, {__, ___, user}: any) => {
+    deleteProduct: async (_:any, {id}: any, {__, ___, user}: any) => {
 
         console.log('user del', user)
         auth(user);
@@ -69,21 +79,23 @@ export const categoryMutation = {
         const yours = getYourData(user)
 
         try {
-            const deleted = await prisma.category.delete({
+            const deleted = await prisma.products.delete({
                 where: {
-                    id,
+                   Proudct_id_identifier: {
                     createdBy: yours,
+                    productID: id
+                   }
                 }
             })
     
             console.log('deleted', deleted);
     
             return {
-                success: "Category Successfuly Deleted !!!"
+                success: "Product Successfuly Deleted !!!"
             }
             
         } catch (error) {
-            throw new GraphQLError("Something Went Wrong! Category Didn't Found!")
+            throw new GraphQLError("Something Went Wrong! Product Didn't Found!")
         }
 
     }

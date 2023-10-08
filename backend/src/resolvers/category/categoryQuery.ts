@@ -9,21 +9,24 @@ export const categoryQuery = {
 
         const yourData = getYourData(user);
 
-        console.log('yur', yourData)
         const data = await prisma.category.findMany({where: {
             createdBy: yourData
-        }})
+        },
+        include: {
+            products: true
+        }
+    })
 
         return data
     }, 
-    category: async (_:any, {input}: any, {__, ___, user}: any) => {
+    category: async (_:any, {id}: any, {__, ___, user}: any) => {
         auth(user)
 
-        const { id } = input
+        const yours = getYourData(user);
 
         const category = await prisma.category.findUnique({where: {
             id: id,
-            createdBy: user.id
+            createdBy: yours
         }})
 
         return category;

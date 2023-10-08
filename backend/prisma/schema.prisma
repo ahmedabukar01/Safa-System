@@ -35,8 +35,8 @@ model Users {
 
 model Products {
   id String @id @default(uuid())
-  productID String
-  productName String
+  productID String 
+  productName String 
   description String
   price Float
   createdBy String
@@ -45,6 +45,8 @@ model Products {
 
   categoryId String
   category Category? @relation(fields: [categoryId], references: [id])
+  @@unique([productID, createdBy], name: "Proudct_id_identifier")
+  @@unique([productName, createdBy], name: "Proudct_name_identifier")
 }
 
 model Category {
@@ -57,4 +59,5 @@ model Category {
 
   // relationship
   products Products[]
+  @@unique([name, createdBy])
 }

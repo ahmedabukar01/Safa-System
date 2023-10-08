@@ -55,9 +55,31 @@
     description: String
   }
 
+# becuase of this, name is required in category input creation.
+  input UpdateCategory {
+    name: String
+    description: String
+  }
+
   input UpdateCategoryInput {
     id: String!,
-    data: CategoryInput
+    data: UpdateCategory
+  }
+
+  input ProductInput {
+  productID: String!
+  productName: String!
+  description: String
+  price: Float!
+  categoryId: String!
+  }
+
+  input UpdateProductInput {
+  productID: String
+  productName: String
+  description: String
+  price: Float
+  categoryId: String
   }
 
   type StatusMessage {
@@ -77,6 +99,8 @@
     user(id: ID!): User
     categories: [Category]
     category(id: ID!): Category
+    products: [Product]!
+    product(id: ID!): Product
 
     # development only
     clearAll: StatusMessage
@@ -88,6 +112,9 @@
     createCategory(input: CategoryInput!): Category
     updateCategory(input: UpdateCategoryInput): Category
     deleteCategory(id: ID!): StatusMessage
+    createProduct(input: ProductInput!): Product
+    updateProduct(input: UpdateProductInput): Product
+    deleteProduct(id: ID!): StatusMessage
 
 
     # super user mutations
