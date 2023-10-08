@@ -2,6 +2,7 @@ import { GraphQLError } from "graphql";
 import prisma from "../../database/configDB";
 import { adminOnly, auth } from "../../utils/auth"
 import { getYourData } from "../../utils/getYourData";
+import { Prisma } from "@prisma/client";
 
 export const categoryMutation = {
     createCategory: async (_:any, {input}: any, {__, ___, user}: any) => {
@@ -10,6 +11,8 @@ export const categoryMutation = {
         auth(user);
         adminOnly(user)
 
+        try {
+            
         const data = await prisma.category.create({
             data: {
                 ...input,
@@ -18,6 +21,17 @@ export const categoryMutation = {
         })
 
         return data
+
+        } catch (error) {
+            if(error instanceof Prisma.PrismaClientKnownRequestError){
+                if(error.code === 'P2002'){
+                    throw new GraphQLError("Unique Constraint violation, Product name or Product ID already Existed!",{
+                        extensions: {code: error.code, stack: error.stack},
+                    } )
+                }
+            }
+        }
+
     },
     updateCategory: async (_:any, {input}: any, {__, ___, user}: any) => {
         console.log('user', user)

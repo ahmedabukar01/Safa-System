@@ -2,6 +2,7 @@ import { GraphQLError } from "graphql";
 import prisma from "../../database/configDB";
 import { adminOnly, auth } from "../../utils/auth"
 import { getYourData } from "../../utils/getYourData";
+import { Prisma } from "@prisma/client";
 
 export const productMutaion = {
     createProduct: async (_:any, {input}: any, {__, ___, user}: any) => {
@@ -14,21 +15,33 @@ export const productMutaion = {
 
         const {categoryId, ...rest} = input
 
-        const data = await prisma.products.create({
-            data: {
-                ...rest,
-                createdBy: user.id,
-                categoryId: categoryId
-            },
-            include: {
-                category: true
+        try {
+            const data = await prisma.products.create({
+                data: {
+                    ...rest,
+                    createdBy: user.id,
+                    categoryId: categoryId
+                },
+                include: {
+                    category: true
+                }
+            }
+            )
+    
+            console.log('data', data)
+
+            return data
+        } catch (error) {
+
+            // this Prisma is not prisma (instance of prisma client).
+            if(error instanceof Prisma.PrismaClientKnownRequestError){
+                if(error.code === 'P2002'){
+                    throw new GraphQLError("Unique Constraint violation, Product name or Product ID already Existed!",{
+                        extensions: {code: error.code, stack: error.stack},
+                    } )
+                }
             }
         }
-        )
-
-        console.log('data', data)
-
-        return data
     },
     updateProduct: async (_:any, {input}: any, {__, ___, user}: any) => {
         console.log('user', user)
@@ -68,19 +81,21 @@ export const productMutaion = {
         try {
             const deleted = await prisma.products.delete({
                 where: {
-                    id,
+                   Proudct_id_identifier: {
                     createdBy: yours,
+                    productID: id
+                   }
                 }
             })
     
             console.log('deleted', deleted);
     
             return {
-                success: "Category Successfuly Deleted !!!"
+                success: "Product Successfuly Deleted !!!"
             }
             
         } catch (error) {
-            throw new GraphQLError("Something Went Wrong! Category Didn't Found!")
+            throw new GraphQLError("Something Went Wrong! Product Didn't Found!")
         }
 
     }

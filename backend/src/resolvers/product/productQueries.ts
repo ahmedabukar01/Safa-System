@@ -11,7 +11,11 @@ export const productQueries = {
 
         const data = await prisma.products.findMany({where: {
             createdBy: yourData
-        }})
+        },
+        include: {
+            category: true
+        }
+    })
 
         return data
     }, 
@@ -20,11 +24,18 @@ export const productQueries = {
 
         const yours = getYourData(user);
 
-        const category = await prisma.products.findUnique({where: {
-            id: id,
+        const product = await prisma.products.findUnique({where: {
+            // combined unique fields, see in our schema
+           Proudct_id_identifier: {
+            productID: id,
             createdBy: yours
-        }})
+           }
+        },
+        include: {
+            category: true
+        }
+    })
 
-        return category;
+        return product;
     }
 }
