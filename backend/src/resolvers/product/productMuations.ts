@@ -88,8 +88,6 @@ export const productMutaion = {
                 }
             })
     
-            console.log('deleted', deleted);
-    
             return {
                 success: "Product Successfuly Deleted !!!"
             }
