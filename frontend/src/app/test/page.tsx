@@ -2,6 +2,8 @@
 export const dynamic = "force-dynamic";
 import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
+import { useAppContext } from "../lib/AppContext";
+import { useEffect, useState } from "react";
 // import { getClient } from "../lib/client";
 
 const Products = gql` query{
@@ -13,12 +15,20 @@ const Products = gql` query{
     `
 
 export default function TestingPgae() {
+  const {state, setState} = useAppContext();
 
-    const {data} = useSuspenseQuery(Products);
-    // const { data } = await getClient().query({ query })
+  const ali = 'ah'
 
-    console.log('data')
+  useEffect(() => {
+    setState({...state, name: "changed"})
+  }, [ali])
+
+  console.log(state, 'state')
+
+    // const {data, error} = useSuspenseQuery(Products)
   return (
-    <div>Testing Page</div>
+    <>
+    <h1>Welocme</h1>
+    </>
   )
 }
