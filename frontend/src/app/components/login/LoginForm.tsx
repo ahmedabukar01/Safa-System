@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Button, Checkbox, Col, Form, Input, Row, Space , Typography} from 'antd';
 
 const { Title } = Typography
-export default function LoginForm() {
+
+export default function LoginForm({onSubmit}: {onSubmit: any}) {
     const onFinish = (values: any) => {
         console.log('Success:', values);
       };
@@ -14,7 +15,7 @@ export default function LoginForm() {
   return (
     <div>
         <div style={{margin: '4em auto', textAlign: "center"}} >
-        <Title level={1}>Welcome To Safa System Online System</Title>
+        <Title level={1}>Welcome To Safa Online System</Title>
         </div>
     <Form
     name="login form"

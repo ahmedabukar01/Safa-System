@@ -6,7 +6,11 @@ import LoginForm from '../components/login/LoginForm'
 export default function Login() {
     const {state, setState}: any = useAppContext()
 
+    const onSubmit = (values: any) => {
+
+    }
+
   return (
-    <LoginForm />
+    <LoginForm onSubmit={onSubmit}/>
   )
 }
