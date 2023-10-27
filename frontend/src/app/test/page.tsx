@@ -17,13 +17,6 @@ const Products = gql` query{
 export default function TestingPgae() {
   const {state, setState} = useAppContext();
 
-  const ali = 'ah'
-
-  useEffect(() => {
-    setState({...state, name: "changed"})
-  }, [ali])
-
-  console.log(state, 'state')
 
     // const {data, error} = useSuspenseQuery(Products)
   return (

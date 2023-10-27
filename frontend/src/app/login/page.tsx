@@ -1,22 +1,16 @@
 'use client'
-import { useEffect, useState } from 'react'
+import * as React from 'react'
 import { useAppContext } from '../lib/AppContext'
+import LoginForm from '../components/login/LoginForm'
 
 export default function Login() {
     const {state, setState}: any = useAppContext()
-    const [my, setMY] = useState({
-        ali: 'aww',
-        ma: "haa"
-    })
 
-    useEffect(() => {
-        setState({...state, name: "ahmed"});
-    }, [])
-    
-    console.log(state)
+    const onSubmit = (values: any) => {
 
+    }
 
   return (
-    <div>page</div>
+    <LoginForm onSubmit={onSubmit}/>
   )
 }
