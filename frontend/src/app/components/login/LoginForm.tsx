@@ -5,7 +5,7 @@ const { Title } = Typography
 
 export default function LoginForm({onSubmit}: {onSubmit: any}) {
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        onSubmit(values)
       };
       
       const onFinishFailed = (errorInfo: any) => {
