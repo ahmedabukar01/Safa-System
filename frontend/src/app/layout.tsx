@@ -19,11 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <ApolloWrapper>
-            <AppProvider>
-              {children}
-            </AppProvider>
-          </ApolloWrapper>
+          <AppProvider>
+            <ApolloWrapper>
+                {children}
+            </ApolloWrapper>
+          </AppProvider>
       </body>
     </html>
   )

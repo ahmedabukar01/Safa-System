@@ -54,12 +54,15 @@ const server = new ApolloServer({
         
         let token;
 
+        console.log('the req headers', req.headers)
+
         if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
             try {
                 token = req?.headers?.authorization?.split(' ')[1];
 
-                if(!token?.length) return {req, res};  // i did this just to prevent the server to crash out. or not to stop. cuz if i use throw new error or graphqlError the server won't work and throws error because it's in the context.
+                console.log('the token', token)
 
+                if(!token?.length) return {req, res};  // i did this just to prevent the server to crash out. or not to stop. cuz if i use throw new error or graphqlError the server won't work and throws error because it's in the context.
 
                 const decoded: any = jwt.verify(token, process.env.WHOAREYOU!);
 
@@ -80,7 +83,7 @@ const server = new ApolloServer({
                 return {req, res, user}
 
             } catch (error) {
-                console.error(error);
+                console.error('Error',error);
                 // res.json({error: "unathorized user or InValid Token / Signature"})
                 throw new GraphQLError('unathorized user')
             }
