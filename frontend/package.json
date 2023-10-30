@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.0.0",
     "@apollo/client": "3.8.0-rc.2",
     "@apollo/experimental-nextjs-app-support": "^0.4.3",
     "antd": "^5.10.2",

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApolloWrapper } from './lib/apollo-wrapper'
 import { AppProvider } from './lib/AppContext'
+import LayoutTheme from './components/layouts/HomeLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body>
           <AppProvider>
             <ApolloWrapper>
-                {children}
+                  {children}
             </ApolloWrapper>
           </AppProvider>
       </body>
