@@ -1,24 +1,26 @@
 "use client";
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 import { gql } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
+import { useAppContext } from "../lib/AppContext";
+import { useEffect, useState } from "react";
+import { Products } from "../graphql";
 // import { getClient } from "../lib/client";
 
-const Products = gql` query{
-    products {
-        id
-        price
-    }
-    }
-    `
-
 export default function TestingPgae() {
+  // const {authToken}: any = useAppContext();
+  const token = localStorage.getItem('token')
 
-    const {data} = useSuspenseQuery(Products);
-    // const { data } = await getClient().query({ query })
+  console.log('authToken in test', token);
 
-    console.log('data')
+
+    const {data, error} = useSuspenseQuery(Products);
+
+    console.log('data', data);
+
   return (
-    <div>Testing Page</div>
+    <>
+    <h1>Welocme</h1>
+    </>
   )
 }
