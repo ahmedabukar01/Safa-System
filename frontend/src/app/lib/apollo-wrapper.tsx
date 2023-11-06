@@ -21,7 +21,8 @@ function makeClient(token: any) {
       uri: "http://localhost:8000/graphql",
       headers: {
         Authorization: token && `Bearer ${token}`
-      }
+      },
+      credentials: "include"
   });
 
   return new NextSSRApolloClient({
