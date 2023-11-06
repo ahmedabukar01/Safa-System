@@ -15,6 +15,7 @@ export default function TestingPgae() {
 
 
     const {data, error} = useSuspenseQuery(Products);
+    if(error) return <h1>Error</h1>
 
     console.log('data', data);
 

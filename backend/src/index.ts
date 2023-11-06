@@ -45,22 +45,25 @@ const resolvers = {
 
 app.use(cookieParser())
 
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true
+}
+
 const server = new ApolloServer({
     resolvers, 
     typeDefs,
+    csrfPrevention: true,
     context: async ({req, res}) => { 
 
         // be care full in these auth, //@ you should improve it and test it.
         
         let token;
 
-        console.log('the req headers', req.headers)
-
         if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
             try {
                 token = req?.headers?.authorization?.split(' ')[1];
 
-                console.log('the token', token)
 
                 if(!token?.length) return {req, res};  // i did this just to prevent the server to crash out. or not to stop. cuz if i use throw new error or graphqlError the server won't work and throws error because it's in the context.
 
@@ -114,7 +117,10 @@ const server = new ApolloServer({
 
 const startServer = async () => {
 await server.start()
-await server.applyMiddleware({ app})
+await server.applyMiddleware({ 
+    app,
+    cors: corsOptions
+})
 
 }
 

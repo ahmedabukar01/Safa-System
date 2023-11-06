@@ -26,7 +26,7 @@ export const authMutation = {
         
         const token = createTokens(user.id);
         
-        await res.cookie('id', token, {
+        await res.cookie.set('id', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
@@ -52,6 +52,19 @@ export const authMutation = {
         if(user && (await bcrypt.compare(password, user.password))){
             
             const token = await createTokens(user.id);
+
+            console.log('the res first', req.cookies)
+
+            res.cookie('id', token, {
+                httpOnly: true,
+                secure: true,
+                // secure: process.env.NODE_ENV === 'production',
+                maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+                sameSite: "none",
+        
+            })
+
+            console.log('res after', res.cookie)
 
             return {
                 token,
