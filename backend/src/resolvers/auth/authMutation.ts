@@ -45,15 +45,11 @@ export const authMutation = {
     signIn: async (_:any, {input}: any, {req, res}: any) =>{
         const {email, password} = input;
 
-        console.log('they come here')
-
         const user = await prisma.users.findUnique({where: {email}})
 
         if(user && (await bcrypt.compare(password, user.password))){
             
-            const token = await createTokens(user.id);
-
-            console.log('the res first', req.cookies)
+            const token = await createTokens(user.id)
 
             res.cookie('id', token, {
                 httpOnly: true,
@@ -63,8 +59,6 @@ export const authMutation = {
                 sameSite: "none",
         
             })
-
-            console.log('res after', res.cookie)
 
             return {
                 token,
