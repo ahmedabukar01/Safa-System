@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google'
 import { ApolloWrapper } from './lib/apollo-wrapper'
 import { AppProvider } from './lib/AppContext'
 import LayoutTheme from './components/layouts/HomeLayout'
+import { cookies } from 'next/headers'
+import { CookiesProvider } from 'next-client-cookies'
+import { ClientCookiesProvider } from './lib/clientCookie'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,13 +20,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <body>
-          <AppProvider>
+          <AppProvider> 
+          <ClientCookiesProvider value={cookies().getAll()}>
             <ApolloWrapper>
                   {children}
             </ApolloWrapper>
+            </ClientCookiesProvider>
           </AppProvider>
       </body>
     </html>
