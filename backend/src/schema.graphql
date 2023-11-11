@@ -101,6 +101,7 @@
     category(id: ID!): Category
     products: [Product]!
     product(id: ID!): Product
+    # refreshToken: StatusMessage
 
     # development only
     clearAll: StatusMessage
@@ -115,6 +116,7 @@
     createProduct(input: ProductInput!): Product
     updateProduct(input: UpdateProductInput): Product
     deleteProduct(id: ID!): StatusMessage
+    logout: StatusMessage
 
 
     # super user mutations

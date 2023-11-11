@@ -15,6 +15,8 @@ import { categoryMutation } from "./resolvers/category/categoryMutation";
 import { categoryQuery } from "./resolvers/category/categoryQuery";
 import { productQueries } from "./resolvers/product/productQueries";
 import { productMutaion } from "./resolvers/product/productMuations";
+import { ALLOWED_HOSTS } from "./config";
+import { authQuery } from "./resolvers/auth/authQuery";
 
 dotenv.config()
 
@@ -33,7 +35,8 @@ const resolvers = {
     Query: {
         ...usersQuery,
         ...categoryQuery,
-        ...productQueries
+        ...productQueries,
+        // ...authQuery
     },
     Mutation: {
         ...usersMutation,
@@ -46,7 +49,7 @@ const resolvers = {
 app.use(cookieParser())
 
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: ALLOWED_HOSTS,
     credentials: true
 }
 

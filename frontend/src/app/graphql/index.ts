@@ -19,3 +19,9 @@ export const Products = gql` query{
     }
     }
     `
+
+export const Logout = gql` mutation{
+    logout {
+    success
+  }
+}`
