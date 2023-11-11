@@ -1,27 +1,29 @@
 "use client";
 // export const dynamic = "force-dynamic";
-import { gql } from "@apollo/client"
+import { gql, useMutation } from "@apollo/client"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 import { useAppContext } from "../lib/AppContext";
 import { useEffect, useState } from "react";
-import { Products } from "../graphql";
+import { Logout, Products } from "../graphql";
+import { Button } from "antd";
 // import { getClient } from "../lib/client";
 
 export default function TestingPgae() {
-  // const {authToken}: any = useAppContext();
-  const token = localStorage.getItem('token')
 
-  console.log('authToken in test', token);
+  const [logout, {data}] =  useMutation(Logout)
+
+    const logut = async () => {
+      const res = await logout();
+
+      console.log('result', res.data);
+    }
 
 
-    const {data, error} = useSuspenseQuery(Products);
-    if(error) return <h1>Error</h1>
-
-    console.log('data', data);
 
   return (
     <>
-    <h1>Welocme</h1>
+    <h1>Welocme to the Testing Mode</h1>
+    <Button onClick={logut}>Logout</Button>
     </>
   )
 }

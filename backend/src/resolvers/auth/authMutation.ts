@@ -1,9 +1,9 @@
-import express , {request, response} from "express";
 import prisma from "../../database/configDB";
 import bcrypt from "bcryptjs"
 import generateToken from "../../utils/generateTokens";
 import jwt from 'jsonwebtoken'
 import { createTokens } from "../../utils/CreateJwtToken";
+import {Request, Response} from 'express'
 
 export const authMutation = {
     register: async (_: any, {input}: any, {req, res}: any) => {
@@ -70,5 +70,18 @@ export const authMutation = {
         } else {
             throw new Error("invalid Credentials")
         }
-    }
+    },
+
+    logout: async (_:any, {}, {req,res}: {req: Request, res: Response} ) => {
+
+        res.cookie('id', '', {
+             httpOnly: true,
+             expires: new Date(0)
+         });
+ 
+        return {
+            success: "woow"
+        }
+ 
+     },
 }
