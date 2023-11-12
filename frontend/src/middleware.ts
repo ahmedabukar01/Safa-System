@@ -2,13 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import {cookies} from 'next/headers';
 
 export function middleware(request: NextRequest){
-    const token = request.cookies.get('id')?.value;
+    const token: any = request.cookies.get('id')?.value;
     const path = request.nextUrl.pathname;
-    console.log('pathname', path, 'token', token);
 
     const isPublicPath = path === "/login" || path === "/register"; 
 
-    if(!isPublicPath && !token?.length > 0){
+    if(!isPublicPath && token?.length > 0){
         return NextResponse.redirect(new URL('/login', request.nextUrl))
     }
 

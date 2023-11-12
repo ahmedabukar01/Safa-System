@@ -21,6 +21,12 @@ export default function LogoutUser() {
   }
   
   return (
-    <Button onClick={()=> signOut()}> Logout </Button>
+    <Button 
+    onClick={()=> signOut()}
+    type='text'
+    style={{
+      paddingLeft: "0px",
+    }}
+    > Logout </Button>
   )
 }

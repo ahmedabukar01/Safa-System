@@ -25,3 +25,17 @@ export const Logout = gql` mutation{
     success
   }
 }`
+
+// categories
+export const Categories = gql` query{
+  categories {
+    id
+    description
+    createdAt
+    name
+    products {
+      productName
+    }
+  }
+  }
+  `

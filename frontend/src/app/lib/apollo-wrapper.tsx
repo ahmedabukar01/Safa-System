@@ -21,7 +21,7 @@ function makeClient(token: any) {
       headers: {
         Authorization: token && `Bearer ${token}`
       },
-      credentials: "include"
+      credentials: "include",
   });
 
   return new NextSSRApolloClient({
@@ -41,8 +41,6 @@ function makeClient(token: any) {
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   const cookie = useCookies();
   const authToken: any = cookie.get('id');
-
-  console.log('in apollo token: ', authToken)
 
   return (
     <ApolloNextAppProvider makeClient={() => makeClient(authToken)}>

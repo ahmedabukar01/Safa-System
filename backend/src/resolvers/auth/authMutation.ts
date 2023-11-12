@@ -79,6 +79,8 @@ export const authMutation = {
              expires: new Date(0)
          });
  
+         res.clearCookie("id");
+         
         return {
             success: "woow"
         }
