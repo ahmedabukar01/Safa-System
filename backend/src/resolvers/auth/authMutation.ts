@@ -63,7 +63,7 @@ export const authMutation = {
             return {
                 token,
                 id: user.id,
-                fullNmae: user.fullName,
+                fullName: user.fullName,
                 role: user.role,
                 access: user.access
             }

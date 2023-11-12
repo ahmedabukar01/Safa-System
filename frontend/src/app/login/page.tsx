@@ -1,7 +1,7 @@
 'use client'
 import * as React from 'react'
 import { useAppContext } from '../lib/AppContext'
-import LoginForm from '../components/login/LoginForm'
+import LoginForm from '../components/auth/LoginForm'
 import { gql, useMutation} from '@apollo/client'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { useRouter } from 'next/navigation'
@@ -10,7 +10,7 @@ import { SignIn } from '../graphql'
 
 export default function Login() {
   const router = useRouter()
-    const {setAuthToken, setUserInfo}: any = useAppContext()
+    const {userInfo, setUserInfo}: any = useAppContext()
     const [signIn, {data}] =  useMutation(SignIn)
    
 
@@ -27,11 +27,11 @@ export default function Login() {
       }
       
       const {access, fullName, id, role, token} = res.data?.signIn;
+      setUserInfo({id, fullName, role})
 
-      console.log('result', access, role)
+      console.log('result', access, role, 'userinfo', userInfo, 'all info', res.data?.signIn)
 
-      // setAuthToken(token);
-      localStorage.setItem('token',token);
+      router.push("/")
     }
 
   return (

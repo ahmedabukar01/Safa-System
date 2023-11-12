@@ -9,6 +9,9 @@ import { Button } from "antd";
 // import { getClient } from "../lib/client";
 
 export default function TestingPgae() {
+  const {userInfo, setUserInfo}: any = useAppContext()
+
+  console.log(userInfo,'user')
 
   const [logout, {data}] =  useMutation(Logout)
 
