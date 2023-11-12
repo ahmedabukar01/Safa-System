@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Avatar, Dropdown, Menu, MenuProps, Select, Space } from 'antd'
+import { Avatar, Button, Dropdown, Menu, MenuProps, Select, Space } from 'antd'
 import Link from 'next/link'
 import { DownOutlined, UserAddOutlined } from '@ant-design/icons'
+import LogoutUser from '../auth/LogoutUser'
 
 const ProfileBadge: React.FC<any> = ({user}) => {
     // as custom
@@ -20,7 +21,7 @@ const ProfileBadge: React.FC<any> = ({user}) => {
       },
       {
         key: 3,
-        label: "Log Out",
+        label: <LogoutUser />
       },
     ]
   return (

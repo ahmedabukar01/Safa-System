@@ -15,7 +15,7 @@ export default function TestingPgae() {
 
   const [logout, {data}] =  useMutation(Logout)
 
-    const logut = async () => {
+    const Logut = async () => {
       const res = await logout();
 
       console.log('result', res.data);
@@ -26,7 +26,7 @@ export default function TestingPgae() {
   return (
     <>
     <h1>Welocme to the Testing Mode</h1>
-    <Button onClick={logut}>Logout</Button>
+    <Button onClick={Logut}>Logout</Button>
     </>
   )
 }
