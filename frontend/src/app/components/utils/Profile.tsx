@@ -10,6 +10,7 @@ const ProfileBadge: React.FC<any> = () => {
 
   const fullName: string = userInfo?.fullName;
   const short = fullName?.substring(0,2)
+  console.log(short, 'short', fullName, 'fullname')
 
     // as custom
     const color = 'red'

@@ -18,6 +18,7 @@ function makeClient(token: any) {
   const httpLink = new HttpLink({
       // https://studio.apollographql.com/public/spacex-l4uc6p/
       uri: "http://localhost:8000/graphql",
+      fetchOptions: {cache: "no-store"},
       headers: {
         Authorization: token && `Bearer ${token}`
       },
