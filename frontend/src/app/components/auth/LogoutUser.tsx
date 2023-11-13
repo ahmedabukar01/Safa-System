@@ -16,7 +16,7 @@ export default function LogoutUser() {
       console.error(res.errors);
     } 
   
-    console.log(res.data)
+    localStorage.clear();
     router.push("/")
   }
   

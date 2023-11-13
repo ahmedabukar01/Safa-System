@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from 'react'
 import { Avatar, Button, Dropdown, Menu, MenuProps, Select, Space } from 'antd'
 import Link from 'next/link'
@@ -6,11 +8,10 @@ import LogoutUser from '../auth/LogoutUser'
 import { useAppContext } from '@/app/lib/AppContext'
 
 const ProfileBadge: React.FC<any> = () => {
-  const { userInfo }: any = useAppContext()
+  const userInfo: any = JSON.parse(localStorage.getItem("userInfo")!)
 
-  const fullName: string = userInfo?.fullName;
+  const fullName = userInfo?.fullName
   const short = fullName?.substring(0,2)
-  console.log(short, 'short', fullName, 'fullname')
 
     // as custom
     const color = 'red'
