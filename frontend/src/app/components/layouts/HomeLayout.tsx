@@ -66,8 +66,8 @@ const LayoutTheme: any = ({children}:any) => {
           <ProfileBadge />
         </div>
       <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '0' }}>
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
+        <Content style={{ margin: '0'}}>
+          <div style={{ padding: 24, minHeight: "80vh", background: colorBgContainer }}>
             {children}
           </div>
         </Content>
