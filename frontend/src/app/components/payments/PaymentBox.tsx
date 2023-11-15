@@ -1,11 +1,30 @@
+"use client"
+import * as React from 'react'
 import { Button, Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import { SearchProduct } from '@/app/graphql'
 
 export default function PaymentBox() {
+  const {data, refetch} = useSuspenseQuery(SearchProduct, {variables: {productId: ""}});
+
+  const OnFinish = async (values: any) => {
+    const value = values.productID;
+    console.log('value', value);
+
+    const res = await refetch({productId: value});
+    if(res.errors) {
+      console.error("Error", res.errors)
+    }
+
+    console.log("after refetch", res.data)
+  };
+
   return (
     <>
     <div>PaymentBox</div>
-    <Form>
+    <Form
+    onFinish={OnFinish}
+    >
         <Row >
         <Col span={24}>
             <Form.Item

@@ -20,6 +20,7 @@ export const productQueries = {
         return data
     }, 
     product: async (_:any, {id}: any, {__, ___, user}: any) => {
+        console.log('the id',id)
         auth(user)
 
         const yours = getYourData(user);

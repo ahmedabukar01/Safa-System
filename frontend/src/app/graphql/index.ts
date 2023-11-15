@@ -73,3 +73,12 @@ export const NewProduct = gql` mutation CreateProduct($input: ProductInput!) {
     id
   }
 }`
+
+export const SearchProduct = gql` query Product($productId: ID!) {
+  product(id: $productId) {
+    productID
+    price
+    id
+    productName
+  }
+}`;
