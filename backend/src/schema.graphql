@@ -15,7 +15,6 @@
   id: String
   productID: String
   productName: String
-  description: String
   price: Float
   category: Category
   createdBy: String
@@ -69,7 +68,6 @@
   input ProductInput {
   productID: String!
   productName: String!
-  description: String
   price: Float!
   categoryId: String!
   }

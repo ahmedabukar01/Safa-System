@@ -9,7 +9,8 @@ import Link from 'next/link'
 import { SignIn } from '../graphql'
 
 export default function Login() {
-  const router = useRouter()
+  const router = useRouter();
+  
     const {userInfo, setUserInfo}: any = useAppContext()
     const [signIn, {data}] =  useMutation(SignIn)
    
@@ -28,11 +29,12 @@ export default function Login() {
       
       const {access, fullName, id, role, token} = res.data?.signIn;
       
-      setUserInfo({id, fullName, role})
+      localStorage.setItem("userInfo", JSON.stringify({fullName, id, role}))
 
-      console.log('result', access, role, 'userinfo', userInfo, 'all info', res.data?.signIn)
+      // console.log('result', access, role, 'userinfo', userInfo, 'all info', res.data?.signIn)
 
-      router.push("/")
+      router.push('/')
+
     }
 
   return (

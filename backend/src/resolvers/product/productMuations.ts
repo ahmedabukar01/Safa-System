@@ -6,9 +6,6 @@ import { Prisma } from "@prisma/client";
 
 export const productMutaion = {
     createProduct: async (_:any, {input}: any, {__, ___, user}: any) => {
-    
-        console.log('the user ',user)
-        console.log('the input', input)
 
         auth(user);
         adminOnly(user)
@@ -22,9 +19,9 @@ export const productMutaion = {
                     createdBy: user.id,
                     categoryId: categoryId
                 },
-                include: {
-                    category: true
-                }
+                // include: {
+                //     category: true
+                // }
             }
             )
     
@@ -33,6 +30,7 @@ export const productMutaion = {
             return data
         } catch (error) {
 
+            console.log("error: ", error)
             // this Prisma is not prisma (instance of prisma client).
             if(error instanceof Prisma.PrismaClientKnownRequestError){
                 if(error.code === 'P2002'){

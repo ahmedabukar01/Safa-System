@@ -27,7 +27,9 @@ const columns = [
 ]
 
 export default function AllCategories() {
-  const {data, error} = useSuspenseQuery(Categories)
+  const {data, error} = useSuspenseQuery(Categories, {
+    fetchPolicy: "no-cache"
+  })
   // console.log('data', data)
 
   const dataSource = data?.categories.map((category:any) => (

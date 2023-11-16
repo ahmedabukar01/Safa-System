@@ -1,3 +1,4 @@
+"use client"
 import * as React from 'react'
 import { Avatar, Button, Dropdown, Menu, MenuProps, Select, Space } from 'antd'
 import Link from 'next/link'
@@ -6,15 +7,21 @@ import LogoutUser from '../auth/LogoutUser'
 import { useAppContext } from '@/app/lib/AppContext'
 
 const ProfileBadge: React.FC<any> = () => {
-  const { userInfo }: any = useAppContext()
+  const [userInfo, setUserInfo] = React.useState<any>('');
 
-  const fullName: string = userInfo?.fullName;
-  const short = fullName?.substring(0,2)
-  console.log(short, 'short', fullName, 'fullname')
 
-    // as custom
-    const color = 'red'
-   const user = short || 'un';
+  // if(typeof window !== 'undefined'){
+  //   userInfo = JSON.parse(localStorage.getItem("userInfo")!)
+  // }
+
+  React.useEffect(() => {
+    setUserInfo(JSON.parse(localStorage?.getItem("userInfo")!));
+  },[])
+
+  const fullName = userInfo?.fullName
+
+  const user = fullName?.substring(0,2) || 'UN'
+  const color = 'red'
 
     // items
     const items: MenuProps['items'] = [
