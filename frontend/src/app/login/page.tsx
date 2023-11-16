@@ -25,15 +25,11 @@ export default function Login() {
 
       if(res?.errors){
         console.log('errors', res.errors)
+      } else{
+        const {access, fullName, id, role, token} = res.data?.signIn;
+        localStorage.setItem("userInfo", JSON.stringify({fullName, id, role}))
+        router.push('/');
       }
-      
-      const {access, fullName, id, role, token} = res.data?.signIn;
-      
-      localStorage.setItem("userInfo", JSON.stringify({fullName, id, role}))
-
-      // console.log('result', access, role, 'userinfo', userInfo, 'all info', res.data?.signIn)
-
-      router.push('/')
 
     }
 

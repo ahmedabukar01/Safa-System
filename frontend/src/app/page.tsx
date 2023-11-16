@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useAppContext } from './lib/AppContext';
 import { useRouter } from 'next/navigation';
 import LayoutTheme from './components/layouts/HomeLayout';
+import PaymentBox from './components/payments/PaymentBox';
 
 export default function Home() {
 
@@ -15,6 +16,8 @@ export default function Home() {
     <h1>Welcome to Safa SuperMarket System </h1>
     <Link href={'/login'}>Login</Link>
     <Link href={'/test'}>test</Link>
+
+    <PaymentBox />
     </LayoutTheme>
   )
 }
