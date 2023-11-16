@@ -88,7 +88,7 @@
 
   type Payload {
     id: String
-    token: String,
+    token: String
     fullName: String
     role: String
     access: String

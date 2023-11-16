@@ -63,7 +63,7 @@ export const authMutation = {
             return {
                 token,
                 id: user.id,
-                fullNmae: user.fullName,
+                fullName: user.fullName,
                 role: user.role,
                 access: user.access
             }
@@ -79,6 +79,8 @@ export const authMutation = {
              expires: new Date(0)
          });
  
+         res.clearCookie("id");
+         
         return {
             success: "woow"
         }
