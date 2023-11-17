@@ -12,7 +12,6 @@ export default function PaymentBox() {
 
   const OnFinish = async (values: any) => {
     const value = values.productID;
-    console.log('value', value);
 
     const res = await refetch({productId: value});
     if(res.errors) {
@@ -23,7 +22,13 @@ export default function PaymentBox() {
   };
 
   React.useEffect(() => {
-    const product = data?.product
+    const product = {
+      id: data?.product?.id,
+      productName: data?.product?.productName,
+      productID: data?.product?.productID,
+      price: data?.product?.price,
+      amount: 1
+    }
 
     const existedItem = cart && cart.find(item => item.id === product?.id);
     if(existedItem) {
@@ -31,12 +36,12 @@ export default function PaymentBox() {
       return 
     }
 
-    if(product){
+    if(product?.price !== undefined){
+      console.log('yes')
       setCart((prev) => [...prev, product])
     }
   }, [data?.product]);
 
-  console.log('cart', cart)
 
   return (
     <>
@@ -63,7 +68,7 @@ export default function PaymentBox() {
         </Row>
     </Form>
 
-    <Cart cart={cart}/>
+    <Cart cart={cart} />
     </>
 
   )
