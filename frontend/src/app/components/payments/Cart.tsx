@@ -3,7 +3,7 @@ import { Input, InputNumber, Table, Typography } from 'antd'
 
 const {Title} = Typography
 
-export default function Cart({cart}: any) {
+export default function Cart({cart, setCart}: any) {
   const [totalCart, setTotalCart] = React.useState<any>([]);
 
   React.useEffect(() => {
@@ -47,19 +47,19 @@ export default function Cart({cart}: any) {
     const oldCarts = totalCart;
 
     if(am > 0){
-     const newCarts = totalCart.map((cart) => {
-        if(cart?.id === item.key){
+     const newCarts = totalCart.map((itemCart) => {
+        if(itemCart?.id === item.key){
           return {
-            ...cart,
+            ...itemCart,
             amount: am
           }
         }
-        return cart
+        return itemCart
       });
 
-      setTotalCart(newCarts)
-
-      console.log(totalCart, 'total new changed')
+      console.log(totalCart)
+      // setTotalCart(newCarts)
+      setCart(newCarts)
       checkout(item,am)
 
     } else {
@@ -78,17 +78,18 @@ export default function Cart({cart}: any) {
 
   //   console.log('total', total)
   // }
- 
-  const checkout  = React.useMemo(() => (cart: [], amount: number = 0) => {
-    let total: number =0;
 
+
+  const checkout  = React.useMemo(() => (cart: [], amount: number = 0) => {
+    let total: number = 0;
     totalCart?.map(item => {
       // total += item?.price * (amount !==0 ? amount : 1);
       // total += item?.id === cart?.key ? item?.price * (amount !==0 ? amount: 0) : item?.price * 1;
       total += item.price * item.amount
     });
 
-    console.log('total', total)
+    localStorage.setItem("total", JSON.stringify(total));
+    
   }, [totalCart]);
 
     // data resource
@@ -103,7 +104,9 @@ export default function Cart({cart}: any) {
 
     data && checkout(data);
 
-    console.log(cart, 'cart inse')
+    // React.useEffect(() => {
+
+    // }, [checkout])
 
   return (
     <div>
@@ -111,6 +114,7 @@ export default function Cart({cart}: any) {
         {
            cart && <Table columns={columns} dataSource={data}/>
         }
+        <Title level={5}>Total: {localStorage.getItem("total")}</Title>
     </div>
   )
 }

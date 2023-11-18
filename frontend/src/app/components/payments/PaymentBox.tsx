@@ -68,7 +68,7 @@ export default function PaymentBox() {
         </Row>
     </Form>
 
-    <Cart cart={cart} />
+    <Cart cart={cart} setCart={setCart}/>
     </>
 
   )
