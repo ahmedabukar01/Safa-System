@@ -75,6 +75,6 @@ model OrderDetails {
   productName String 
   price Float
   amount Int
-  orderId String
-  payments Payments @relation(fields: [orderId], references: [id])
+  paymentId String
+  payments Payments @relation(fields: [paymentId], references: [id])
 }
