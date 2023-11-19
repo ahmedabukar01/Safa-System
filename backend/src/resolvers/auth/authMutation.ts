@@ -1,9 +1,9 @@
-import express , {request, response} from "express";
 import prisma from "../../database/configDB";
 import bcrypt from "bcryptjs"
 import generateToken from "../../utils/generateTokens";
 import jwt from 'jsonwebtoken'
 import { createTokens } from "../../utils/CreateJwtToken";
+import {Request, Response} from 'express'
 
 export const authMutation = {
     register: async (_: any, {input}: any, {req, res}: any) => {
@@ -26,7 +26,7 @@ export const authMutation = {
         
         const token = createTokens(user.id);
         
-        await res.cookie('id', token, {
+        await res.cookie.set('id', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
@@ -45,23 +45,45 @@ export const authMutation = {
     signIn: async (_:any, {input}: any, {req, res}: any) =>{
         const {email, password} = input;
 
-        console.log('they come here')
-
         const user = await prisma.users.findUnique({where: {email}})
 
         if(user && (await bcrypt.compare(password, user.password))){
             
-            const token = await createTokens(user.id);
+            const token = await createTokens(user.id)
+
+            res.cookie('id', token, {
+                httpOnly: true,
+                secure: true,
+                // secure: process.env.NODE_ENV === 'production',
+                maxAge:  1000 * 60 * 60 * 24, // 1000 * 60 = one munite. // 1000 * 60 * 60 * 24 * 7 = 7 days 
+                sameSite: "none",
+        
+            })
 
             return {
                 token,
                 id: user.id,
-                fullNmae: user.fullName,
+                fullName: user.fullName,
                 role: user.role,
                 access: user.access
             }
         } else {
             throw new Error("invalid Credentials")
         }
-    }
+    },
+
+    logout: async (_:any, {}, {req,res}: {req: Request, res: Response} ) => {
+
+        res.cookie('id', '', {
+             httpOnly: true,
+             expires: new Date(0)
+         });
+ 
+         res.clearCookie("id");
+         
+        return {
+            success: "woow"
+        }
+ 
+     },
 }

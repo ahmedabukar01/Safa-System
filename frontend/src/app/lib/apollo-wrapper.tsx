@@ -12,16 +12,17 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
-import nookies from 'nookies'
-import { useAppContext } from "./AppContext";
+import { useCookies } from "next-client-cookies";
 
 function makeClient(token: any) {
   const httpLink = new HttpLink({
       // https://studio.apollographql.com/public/spacex-l4uc6p/
       uri: "http://localhost:8000/graphql",
+      fetchOptions: {cache: "no-store"},
       headers: {
         Authorization: token && `Bearer ${token}`
-      }
+      },
+      credentials: "include",
   });
 
   return new NextSSRApolloClient({
@@ -39,8 +40,8 @@ function makeClient(token: any) {
 }
 
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
-  const authToken: any = localStorage.getItem('token');
-  console.log('authToken in apollo ',authToken);
+  const cookie = useCookies();
+  const authToken: any = cookie.get('id');
 
   return (
     <ApolloNextAppProvider makeClient={() => makeClient(authToken)}>

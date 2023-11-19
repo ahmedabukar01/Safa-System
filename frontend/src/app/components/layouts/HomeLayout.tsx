@@ -9,9 +9,12 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Typography } from 'antd';
+import Link from 'next/link';
+import ProfileBadge from '../utils/Profile';
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Title } = Typography
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -30,14 +33,17 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
+  getItem(<Link href={'/'}>Home</Link>, '1', <PieChartOutlined />),
+//  getItem(<Link href={"/categories"}>Categories</Link>, '2', <DesktopOutlined />),
+  getItem(<Link href={"/categories"}>Categories</Link>, 'sub1', <UserOutlined />, [
+    getItem(<Link href={'/categories'}>View Categories</Link>, '3'),
+    getItem(<Link href={'/categories/create'}>Create Category</Link>, '4'),
   ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+  getItem(<Link href={"/products"}>Products</Link>, 'sub2', <UserOutlined />, [
+    getItem(<Link href={'/products'}>View Products</Link>, '5'),
+    getItem(<Link href={'/products/create'}>Create Products</Link>, '6'),
+  ]),
+  getItem('Team', 'sub3', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
   getItem('Files', '9', <FileOutlined />),
 ];
 
@@ -48,24 +54,24 @@ const LayoutTheme: any = ({children}:any) => {
   } = theme.useToken();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' }} >
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
-            Bill is a cat.
+        <div style={{display: "flex", justifyContent: "space-between", padding: "10px 5px"}}
+        >
+          <Title level={2}>Safa</Title>
+          <ProfileBadge />
+        </div>
+      <Header style={{ padding: 0, background: colorBgContainer }} />
+        <Content style={{ margin: '0'}}>
+          <div style={{ padding: 24, minHeight: "80vh", background: colorBgContainer }}>
             {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>Safa System ©2023 Created by Normed Technology</Footer>
       </Layout>
     </Layout>
   );
