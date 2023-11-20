@@ -1,13 +1,16 @@
 "use client"
 import * as React from 'react'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, Typography } from 'antd'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { SearchProduct } from '@/app/graphql'
 import Cart from './Cart'
-import Error from 'next/error'
+import { center } from '@/app/css/styles'
+
+const { Title } = Typography
 
 export default function PaymentBox() {
   const [cart, setCart] = React.useState<any>('')
+  const [form] = Form.useForm();
   const {data, refetch} = useSuspenseQuery(SearchProduct, {variables: {productId: ""}});
 
   const OnFinish = async (values: any) => {
@@ -19,18 +22,18 @@ export default function PaymentBox() {
     }
 
     console.log("after refetch", res.data)
+    form.resetFields();
   };
 
   React.useEffect(() => {
     const product = {
-      id: data?.product?.id,
       productName: data?.product?.productName,
       productID: data?.product?.productID,
       price: data?.product?.price,
       amount: 1
     }
 
-    const existedItem = cart && cart.find(item => item.id === product?.id);
+    const existedItem = cart && cart.find(item => item.productID === product?.productID);
     if(existedItem) {
       console.log("item already in the cart")
       return 
@@ -45,8 +48,9 @@ export default function PaymentBox() {
 
   return (
     <>
-    <div>PaymentBox</div>
+    <Title level={3} style={center}>Checkout Center</Title>
     <Form
+    form={form}
     onFinish={OnFinish}
     style={{marginBottom: "10px"}}
     >
@@ -62,7 +66,7 @@ export default function PaymentBox() {
         </Col>
         </Row>
         <Row >
-        <Col span={24}>
+        <Col span={24} style={center}>
             <Button type='primary' htmlType='submit'>Search</Button>
         </Col>
         </Row>
