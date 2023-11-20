@@ -60,3 +60,21 @@ model Category {
   products Products[]
   @@unique([name, createdBy])
 }
+
+model Payments {
+  id String @id @default(uuid())
+  items OrderDetails[]
+  total Float
+  createdBy String
+  createdAt DateTime @default(now())
+}
+
+model OrderDetails {
+  id String @id @default(uuid())
+  productID String 
+  productName String 
+  price Float
+  amount Int
+  paymentId String
+  payments Payments @relation(fields: [paymentId], references: [id])
+}

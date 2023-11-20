@@ -73,3 +73,34 @@ export const NewProduct = gql` mutation CreateProduct($input: ProductInput!) {
     id
   }
 }`
+
+export const SearchProduct = gql` query Product($productId: ID!) {
+  product(id: $productId) {
+    productID
+    price
+    id
+    productName
+  }
+}`;
+
+// payments
+export const SavePaymentReport = gql` mutation CreatePayment($input: PaymentInput!) {
+  createPayment(input: $input) {
+    success
+  }
+}`
+
+export const AllPaymentReport = gql` query {
+    payments {
+    id
+    total
+    createdBy
+    createdAt
+    items {
+      amount
+      price
+      productID
+      productName
+    }
+  }
+}`

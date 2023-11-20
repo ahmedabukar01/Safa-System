@@ -72,6 +72,18 @@
   categoryId: String!
   }
 
+  input OrderInfoInput {
+  productID: String!
+  productName: String!
+  price: Float!
+  amount: Float
+  }
+
+  input PaymentInput {
+    items: [OrderInfoInput]
+    total: Float
+  }
+
   input UpdateProductInput {
   productID: String
   productName: String
@@ -82,6 +94,21 @@
 
   type StatusMessage {
     success: String
+  }
+
+  type OrderInfo {
+  productID: String!
+  productName: String!
+  price: Float!
+  amount: Float
+  }
+
+  type Payment {
+    id: String
+    total: Float
+    items: [OrderInfo]
+    createdBy: String
+    createdAt: String
   }
 
   type Payload {
@@ -99,6 +126,7 @@
     category(id: ID!): Category
     products: [Product]!
     product(id: ID!): Product
+    payments: [Payment]
     # refreshToken: StatusMessage
 
     # development only
@@ -115,7 +143,7 @@
     updateProduct(input: UpdateProductInput): Product
     deleteProduct(id: ID!): StatusMessage
     logout: StatusMessage
-
+    createPayment(input: PaymentInput!): StatusMessage
 
     # super user mutations
     register(input: UserInput): Payload  
