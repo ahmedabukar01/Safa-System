@@ -7,9 +7,11 @@ import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { SignIn } from '../graphql'
+import { useCookies } from 'next-client-cookies'
 
 export default function Login() {
   const router = useRouter();
+  const cookie = useCookies()
   
     const {userInfo, setUserInfo}: any = useAppContext()
     const [signIn, {data}] =  useMutation(SignIn)
@@ -26,8 +28,8 @@ export default function Login() {
       if(res?.errors){
         console.log('errors', res.errors)
       } else{
-        const {access, fullName, id, role, token} = res.data?.signIn;
-        localStorage.setItem("userInfo", JSON.stringify({fullName, id, role}))
+        const {access, fullName, role} = res.data?.signIn;
+        localStorage.setItem("userInfo", JSON.stringify({fullName, role}))
         router.push('/');
       }
 

@@ -124,6 +124,7 @@ export default function Cart({cart, setCart}: any) {
       // const res = parseFloat(localStorage.getItem("total")!)
 
       // console.log(res,' the resssssss')
+      
       setCart([]) // @also clear lcoalStorage.
     }
 

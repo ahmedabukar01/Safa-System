@@ -24,7 +24,7 @@ export const authMutation = {
         // generateToken(response, user.id)
 
         
-        const token = createTokens(user.id);
+        const token = createTokens(user.id, user.role);
         
         await res.cookie.set('id', token, {
             httpOnly: true,
@@ -49,7 +49,7 @@ export const authMutation = {
 
         if(user && (await bcrypt.compare(password, user.password))){
             
-            const token = await createTokens(user.id)
+            const token = await createTokens(user.id,user.role)
 
             res.cookie('id', token, {
                 httpOnly: true,

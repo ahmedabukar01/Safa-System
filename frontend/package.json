@@ -15,6 +15,7 @@
     "antd": "^5.10.2",
     "cookies-next": "^4.0.0",
     "graphql": "^16.8.1",
+    "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
     "next-client-cookies": "^1.0.6",
     "nookies": "^2.5.2",
