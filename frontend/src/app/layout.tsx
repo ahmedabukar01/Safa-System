@@ -7,6 +7,7 @@ import LayoutTheme from './components/layouts/HomeLayout'
 import { cookies } from 'next/headers'
 import { CookiesProvider } from 'next-client-cookies'
 import { ClientCookiesProvider } from './lib/clientCookie'
+import { Providers } from './globalRedux/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,13 +25,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <AppProvider> 
+          {/* <AppProvider>  */}
+          <Providers>
           <ClientCookiesProvider value={cookies().getAll()}>
             <ApolloWrapper>
                   {children}
             </ApolloWrapper>
             </ClientCookiesProvider>
-          </AppProvider>
+            </Providers>
+          {/* </AppProvider> */}
       </body>
     </html>
   )

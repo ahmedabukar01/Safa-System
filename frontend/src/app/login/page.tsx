@@ -8,10 +8,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { SignIn } from '../graphql'
 import { useCookies } from 'next-client-cookies'
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../globalRedux/features/userSlice'
 
 export default function Login() {
   const router = useRouter();
-  const cookie = useCookies()
+  const cookie = useCookies();
+  const dispatch = useDispatch()
   
     const {userInfo, setUserInfo}: any = useAppContext()
     const [signIn, {data}] =  useMutation(SignIn)
@@ -30,6 +33,7 @@ export default function Login() {
       } else{
         const {access, fullName, role} = res.data?.signIn;
         localStorage.setItem("userInfo", JSON.stringify({fullName, role}))
+        dispatch(updateUser({role, fullName, access}))
         router.push('/');
       }
 

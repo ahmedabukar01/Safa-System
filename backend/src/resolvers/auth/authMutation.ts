@@ -24,17 +24,16 @@ export const authMutation = {
         // generateToken(response, user.id)
 
         
-        const token = createTokens(user.id, user.role);
+        // const token = createTokens(user.id, user.role);
         
-        await res.cookie.set('id', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
-        })
+        // await res.cookie.set('id', token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production',
+        //     maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+        // })
 
 
         return {
-            token,
             id: user.id,
             fullNmae: user.fullName,
             role: user.role,
