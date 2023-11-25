@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {cookies} from 'next/headers';
+import { useSelector } from "react-redux";
 
 const protectedRoutes = [
     "/products/create",
@@ -9,7 +10,6 @@ const protectedRoutes = [
 
 export async function middleware(request: NextRequest){
     const token: any = request.cookies.get('id')?.value;
-    const role = request.cookies.get("role")?.value;
     const path = request.nextUrl.pathname;
 
     console.log('path', path)
@@ -25,10 +25,10 @@ export async function middleware(request: NextRequest){
     }
 
     
-    if(path === `/${process.env.ADMINPATH}` && role !== process.env.ADMINNAME){
+    // if(path === `/${process.env.ADMINPATH}` && role !== process.env.ADMINNAME){
 
-        console.log('the res', path, 'and ', role)
-    }
+    //     console.log('the res', path, 'and ', role)
+    // }
     
 }
 
@@ -38,6 +38,7 @@ export async function middleware(request: NextRequest){
 //     return decoded;
 // }
 
+
 export const config = {
-    matcher: ["/products/:path*", "/categories:path*", "/test/:path*","/", "/login", "/register", "/saasoffice"]
+    matcher: ["/products/:path*", "/categories:path*", "/test/:path*", "/", "/login", "/register", "/saasoffice"]
 }

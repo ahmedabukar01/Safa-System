@@ -6,13 +6,15 @@ import { useAppContext } from "../lib/AppContext";
 import { useEffect, useState } from "react";
 import { Logout, Products } from "../graphql";
 import { Button } from "antd";
-import { useDispatch } from "react-redux";
-import { updateUser } from "../globalRedux/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserRole } from "../globalRedux/features/userSlice";
 // import { getClient } from "../lib/client";
 
 export default function TestingPgae() {
   // const {userInfo, setUserInfo}: any = useAppContext()
   const dispatch = useDispatch();
+  const value = useSelector((state) => state.UserInfo.role);
+  console.log('value', value)
 
   const [logout, {data}] =  useMutation(Logout)
 
@@ -25,7 +27,7 @@ export default function TestingPgae() {
     const setUser = () => {
       const role: string ="users"
       // dispatch(updateUser({role: "admin", fullName: "ahmed", access: "true"}))
-      dispatch(updateUser(role))
+      dispatch(setUserRole(role))
     }
 
 

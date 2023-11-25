@@ -2,8 +2,11 @@ import { useMutation } from '@apollo/client'
 import { Logout } from '@/app/graphql'
 import { useRouter } from 'next/navigation';
 import { Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setUserRole } from '@/app/globalRedux/features/userSlice';
 
 export default function LogoutUser() {
+  const dispatch = useDispatch()
   
   const router = useRouter();
   const [logout, {data}] =  useMutation(Logout)
@@ -17,6 +20,8 @@ export default function LogoutUser() {
     } 
   
     localStorage.clear();
+    dispatch(setUserRole(""))
+
     router.push("/")
   }
   
