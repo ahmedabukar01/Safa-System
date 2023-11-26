@@ -6,7 +6,7 @@ import { createTokens } from "../../utils/CreateJwtToken";
 import {Request, Response} from 'express'
 
 export const authMutation = {
-    register: async (_: any, {input}: any, {req, res}: any) => {
+    register: async (_: any, {input}: any, {req, res, user}: any) => {
         const {password, email, ...rest} = input
 
         const userExists = await prisma.users.findUnique({where: {email}});
@@ -15,7 +15,7 @@ export const authMutation = {
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(password, salt)
 
-        const user = await prisma.users.create({data: {
+        const newUser = await prisma.users.create({data: {
             ...rest,
             email,
             password: hashed
@@ -34,10 +34,10 @@ export const authMutation = {
 
 
         return {
-            id: user.id,
-            fullNmae: user.fullName,
-            role: user.role,
-            access: user.access
+            id: newUser.id,
+            fullNmae: newUser.fullName,
+            role: newUser.role,
+            access: newUser.access
         };
 
     },

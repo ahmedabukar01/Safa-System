@@ -24,7 +24,7 @@ function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  children?: MenuItem[],
+  children?: MenuItem[] | null,
   roles?: []
 ): MenuItem {
   return {
@@ -36,17 +36,19 @@ function getItem(
   } as MenuItem;
 }
 
+const ALLOWED_ROLES = ["ADMIN", "SUPER_ADMIN"]
+
 const items: MenuItem[] = [
-  getItem(<Link href={'/'}>Home</Link>, '1', <PieChartOutlined />, [], ["ADMIN", "SUPER_ADMIN"]),
+  getItem(<Link href={'/'}>Home</Link>, '1', <PieChartOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
 //  getItem(<Link href={"/categories"}>Categories</Link>, '2', <DesktopOutlined />),
   getItem(<Link href={"/categories"}>Categories</Link>, 'Category', <UserOutlined />, [
-    getItem(<Link href={'/categories'}>View Categories</Link>, 'VC'),
-    getItem(<Link href={'/categories/create'}>Create Category</Link>, 'CC', [], ["ADMIN", "SUPER_ADMIN"]),
-  ]),
+    getItem(<Link href={'/categories'}>View Categories</Link>, 'VC',),
+    getItem(<Link href={'/categories/create'} >Create Category</Link>, 'CC', null, null, ["ADMIN", "SUPER_ADMIN"]),
+  ], ["ADMIN", "USER", "SUPER_ADMIN"]),
   getItem(<Link href={"/products"}>Products</Link>, 'Products', <UserOutlined />, [
     getItem(<Link href={'/products'}>View Products</Link>, 'VP'),
-    getItem(<Link href={'/products/create'}>Create Products</Link>, 'CP', [], ["ADMIN", "SUPER_ADMIN"]),
-  ]),
+    getItem(<Link href={'/products/create'}>Create Products</Link>, 'CP', [], null, ["ADMIN", "SUPER_ADMIN"]),
+  ], ["ADMIN", "USER", "SUPER_ADMIN"]),
   getItem('Team', 'Teams', <TeamOutlined />, [getItem('Team 1', 'VT'), getItem('Team 2', '8')], ["ADMIN", "SUPER_ADMIN"]),
   getItem('Files', '9', <FileOutlined />),
 ];
@@ -64,24 +66,25 @@ const LayoutTheme: any = ({children}:any) => {
   const userRole = useSelector((state) => state.UserInfo.role);
 
 
-  // console.log("items", items, "userRole", userRole);
+  console.log("items", items, "userRole", userRole);
 
   const perMittedMenu = items.filter((item) => {
     if(item?.roles?.includes(userRole)) {
-      // if(item?.children){
-      //   // item?.children = item?.children.filter((child) => child?.roles.includes(userRole))
-      //   const newItems = item?.children.filter((child) => child?.roles?.includes(userRole));
-      //   return newItems
+      // if(item?.children.length > 0){
+      //   // if(item?.children.filter((child) => child?.roles?.includes(userRole))){
+      //   //   return true
+      //   // } else return false
+      //   // return true
       // }
 
       return true
     }
-    if(item?.children) {
-      return item.children.filter((child) => child?.roles?.includes(userRole))
-    }
+    // if(item?.children) {
+    //   return item.children.filter((child) => child?.roles?.includes(userRole))
+    // }
   })
 
-  // console.log("perhippitedItems", perMittedMenu)
+  console.log("permitted", perMittedMenu)
 
   return (
     <Layout style={{ minHeight: '100vh' }} >
