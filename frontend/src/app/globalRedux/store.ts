@@ -1,8 +1,9 @@
 "use client";
 import { combineReducers, configureStore  } from "@reduxjs/toolkit";
 import userSlice from "./features/userSlice";
-import storage from 'redux-persist/lib/storage'
+// import storage from 'redux-persist/lib/storage'
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from "redux-persist";
+import AsyncStorage from '@react-native-community/async-storage';
 
 // const rootReducers = combineReducers({
 //     UserInfo: userSlice
@@ -10,7 +11,7 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } fro
 
 const persistConfig = {
     key: "user",
-    storage
+    storage: AsyncStorage
 }
 
 const rootReducer = combineReducers({

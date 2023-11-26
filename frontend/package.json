@@ -12,6 +12,7 @@
     "@ant-design/icons": "^4.0.0",
     "@apollo/client": "3.8.0-rc.2",
     "@apollo/experimental-nextjs-app-support": "^0.4.3",
+    "@react-native-community/async-storage": "^1.12.1",
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.10.2",
     "cookies-next": "^4.0.0",
