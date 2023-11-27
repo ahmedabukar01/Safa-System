@@ -104,3 +104,15 @@ export const AllPaymentReport = gql` query {
     }
   }
 }`
+
+// users
+export const Admins = gql` query {
+    adminsOnly {
+    email
+    role
+    adminBy
+    fullName
+    id
+    access
+  }
+}`

@@ -10,6 +10,8 @@ import { ClientCookiesProvider } from './lib/clientCookie'
 import { Providers } from './globalRedux/provider'
 import { ConfigProvider } from 'antd'
 import { customTheme } from './utils/config'
+import { Suspense } from 'react'
+import Loading from './loading'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,7 +34,9 @@ export default function RootLayout({
           <ClientCookiesProvider value={cookies().getAll()}>
             <ApolloWrapper>
               <ConfigProvider theme={customTheme}>
+                <Suspense fallback={<Loading />}>
                   {children}
+                </Suspense>
               </ConfigProvider>
             </ApolloWrapper>
             </ClientCookiesProvider>

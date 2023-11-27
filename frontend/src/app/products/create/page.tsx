@@ -5,8 +5,11 @@ import { useMutation } from "@apollo/client";
 import { NewCategory, NewProduct } from "@/app/graphql";
 import { useRouter } from "next/navigation";
 import ProductsForm from "@/app/components/ProductForm";
+import AdminOnly from "@/app/components/auth/AdminOnly";
 
 export default function CreateProduct() {
+  AdminOnly();
+  
   const router = useRouter();
   const [createProduct] = useMutation(NewProduct)
   

@@ -1,25 +1,53 @@
+import * as React from 'react'
 import { Button, Col, Form, Input, Row, Select } from 'antd'
-import React from 'react'
+import { GET_USERS } from './utils/auth'
+
+const ROLES = [
+  {
+    label: "USER",
+    value: "USER"
+  },
+  {
+    label: "ADMIN",
+    value: "ADMIN"
+  },
+  {
+    label: "SUPER_ADMIN",
+    value: "SUPER_ADMIN"
+  }
+]
 
 export default function CreateUserForm({onSubmit}: any) {
+  const [roleBased, setRoleBased] = React.useState(false)
+
+  const admins = GET_USERS();
+  console.log(admins, 'users')
     
     const onFinish = (values: any) => {
 
     }
 
+    const onChange = (e) => {
+      if(e === 'USER'){
+        setRoleBased(true)
+      } else {
+        setRoleBased(false)
+      }
+    }
+
   return (
     <>
    <Form
-    name="create Product form"
+    name="Register form"
     onFinish={onFinish}
     style={{ maxWidth: 600, maxHeight: 900, display: 'flex', margin: 'auto', flexDirection: "column", justifyContent: "center", alignContent: "center" }}
   >
     <Row >
       <Col span={24}>
         <Form.Item
-        label="Product Name"
-        name="productName"
-        rules={[{ required: true, message: 'Please input your Name!' }]}
+        label="Name"
+        name="fullName"
+        rules={[{ required: true, message: 'Please input Name!' }]}
         >
         <Input />
       </Form.Item>
@@ -28,11 +56,22 @@ export default function CreateUserForm({onSubmit}: any) {
     <Row>
       <Col span={24}>
         <Form.Item
-        label="Product ID"
-        name="productID"
-        rules={[{ required: true, message: 'Please input your product ID!' }]}
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: 'Please input Email!' }]}
         >
         <Input />
+      </Form.Item>
+      </Col>
+    </Row>
+    <Row>
+      <Col span={24}>
+        <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: 'Please input Password' }]}
+        >
+        <Input.Password/>
       </Form.Item>
       </Col>
     </Row>
@@ -40,18 +79,32 @@ export default function CreateUserForm({onSubmit}: any) {
     <Row>
       <Col span={24}>
         <Form.Item
-        label="Category"
-        name="categoryId"
-        rules={[{ required: true, message: 'Please input your Description!' }]}
+        label="Role"
+        name="role"
+        rules={[{ required: true, message: 'Please input Role!' }]}
         >
-        <Select options={categories}/>
+        <Select options={ROLES} onChange={onChange}/>
       </Form.Item>
       </Col>
     </Row>
-
+    {
+      roleBased && (
+        <Row>
+        <Col span={24}>
+          <Form.Item
+          label="Admin By"
+          name="adminBy"
+          rules={[{ required: true, message: 'Who admins this!' }]}
+          >
+          <Select options={admins} placeholder="Select Who Admin's"/>
+        </Form.Item>
+        </Col>
+      </Row>
+      )
+    }
     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
       <Button type="primary" htmlType="submit">
-        Create Product
+        Register User
       </Button>
     </Form.Item>
 

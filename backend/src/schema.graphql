@@ -127,6 +127,7 @@
     products: [Product]!
     product(id: ID!): Product
     payments: [Payment]
+    adminsOnly: [User]!
     # refreshToken: StatusMessage
 
     # development only

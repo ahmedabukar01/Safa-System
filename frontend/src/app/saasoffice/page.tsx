@@ -4,6 +4,8 @@ import { Content } from "antd/es/layout/layout";
 import { notFound } from "next/navigation";
 import { Typography } from "antd";
 import { useSelector } from "react-redux";
+import CreateUserForm from "../components/CreateUserForm";
+import { center } from "../css/styles";
 
 const {Title} = Typography
 export default function SuperPage() {
@@ -30,7 +32,9 @@ export default function SuperPage() {
     <>
     <div>You come across the Super Admin page!!!</div>
 
-    <Title level={2}>Create New User</Title>
+    <Title level={2} style={center}>Register New Client</Title>
+
+    <CreateUserForm />
     </>
   )
 }

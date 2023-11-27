@@ -24,7 +24,7 @@ function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  children?: MenuItem[] | null,
+  children?: MenuItem[] | null | undefined,
   roles?: []
 ): MenuItem {
   return {
@@ -42,11 +42,11 @@ const items: MenuItem[] = [
   getItem(<Link href={'/'}>Home</Link>, '1', <PieChartOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
 //  getItem(<Link href={"/categories"}>Categories</Link>, '2', <DesktopOutlined />),
   getItem(<Link href={"/categories"}>Categories</Link>, 'Category', <UserOutlined />, [
-    getItem(<Link href={'/categories'}>View Categories</Link>, 'VC',),
+    getItem(<Link href={'/categories'}>View Categories</Link>, 'VC', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
     getItem(<Link href={'/categories/create'} >Create Category</Link>, 'CC', null, null, ["ADMIN", "SUPER_ADMIN"]),
   ], ["ADMIN", "USER", "SUPER_ADMIN"]),
   getItem(<Link href={"/products"}>Products</Link>, 'Products', <UserOutlined />, [
-    getItem(<Link href={'/products'}>View Products</Link>, 'VP'),
+    getItem(<Link href={'/products'}>View Products</Link>, 'VP', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
     getItem(<Link href={'/products/create'}>Create Products</Link>, 'CP', [], null, ["ADMIN", "SUPER_ADMIN"]),
   ], ["ADMIN", "USER", "SUPER_ADMIN"]),
   getItem('Team', 'Teams', <TeamOutlined />, [getItem('Team 1', 'VT'), getItem('Team 2', '8')], ["ADMIN", "SUPER_ADMIN"]),
@@ -65,26 +65,25 @@ const LayoutTheme: any = ({children}:any) => {
   const dispatch = useDispatch();
   const userRole = useSelector((state) => state.UserInfo.role);
 
-
-  console.log("items", items, "userRole", userRole);
-
   const perMittedMenu = items.filter((item) => {
     if(item?.roles?.includes(userRole)) {
-      // if(item?.children.length > 0){
-      //   // if(item?.children.filter((child) => child?.roles?.includes(userRole))){
-      //   //   return true
-      //   // } else return false
-      //   // return true
-      // }
+      if(item?.children?.length > 0){
+        let newItems = item.children.filter((child) => child?.roles?.includes(userRole))
+
+        while (item?.children?.length > 0){ // need to clear the array before assign new filtered items
+          item?.children?.pop(); 
+        }
+
+        item?.children?.push(...newItems) // assigning now the new permitted childrens
+        return true
+      }
 
       return true
     }
-    // if(item?.children) {
-    //   return item.children.filter((child) => child?.roles?.includes(userRole))
-    // }
   })
 
-  console.log("permitted", perMittedMenu)
+  // console.log("permitted", perMittedMenu)
+
 
   return (
     <Layout style={{ minHeight: '100vh' }} >

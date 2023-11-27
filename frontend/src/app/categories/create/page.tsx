@@ -4,7 +4,9 @@ import CreateCategoryForm from "@/app/components/CreateCategoryForm";
 import { useMutation } from "@apollo/client";
 import { NewCategory } from "@/app/graphql";
 import { useRouter } from "next/navigation";
+import AdminOnly from "@/app/components/auth/AdminOnly";
 export default function CreateCategory() {
+  AdminOnly()
   const router = useRouter();
   const [createCategory] = useMutation(NewCategory)
   

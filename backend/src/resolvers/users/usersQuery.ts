@@ -13,6 +13,15 @@ export const usersQuery = {
 
         return prisma.users.findMany();
     },
+    adminsOnly: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
+
+        console.log('user', user)
+
+        auth(user)
+        superAdmin(user)
+
+        return prisma.users.findMany({where: {role: "ADMIN"}});
+    },
 
     user: async (_:any,{id}: uniqueId, {req, res, user} : any) => {
         const SingleUser = await prisma.users.findUnique({where: {id}})
