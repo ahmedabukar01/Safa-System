@@ -3,7 +3,7 @@ export const project = {
     theme: {
         colorPrimary: "#1677ff",
         third: '#00b96b',
-        bgColor: '#f6ffed',
+        colorBgContainer: '#f6ffed',
     }
 }
 

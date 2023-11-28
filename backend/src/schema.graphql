@@ -1,4 +1,6 @@
 # const typeDefs = gql`
+scalar Date
+
  type User {
     id: ID!
     fullName: String!
@@ -7,8 +9,9 @@
     adminBy: String
     password: String!
     access: Boolean
-    createdAt: String
-    updatedAt: String
+    lastLogged: Date
+    createdAt: Date
+    updatedAt: Date
  }
 
   type Product {
@@ -18,8 +21,8 @@
   price: Float
   category: Category
   createdBy: String
-  createdAt: String
-  updatedAt: String
+  createdAt: Date
+  updatedAt: Date
   }
 
   type Category {
@@ -28,8 +31,8 @@
     description: String
     createdBy: String
     products: [Product]
-    createdAt: String
-    updatedAt: String
+    createdAt: Date
+    updatedAt: Date
   }
 
    input UserInput {
@@ -38,6 +41,7 @@
     password: String!
     role: Role!
     access: Boolean
+    adminBy: String
   }
 
   input UserInputWithAdminId {
@@ -108,7 +112,7 @@
     total: Float
     items: [OrderInfo]
     createdBy: String
-    createdAt: String
+    createdAt: Date
   }
 
   type Payload {

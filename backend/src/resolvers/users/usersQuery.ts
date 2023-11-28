@@ -4,14 +4,17 @@ import { uniqueId } from "../types";
 import { auth, superAdmin } from "../../utils/auth";
 
 export const usersQuery = {
-    users: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
+    users: async (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
 
         console.log('user', user)
 
         auth(user)
         superAdmin(user)
 
-        return prisma.users.findMany();
+        const allClients = await prisma.users.findMany();
+        console.log('cleints', allClients);
+
+        return allClients;
     },
     adminsOnly: (_:any, {}:any, {___,__,user}: any ) => { // use one or two underscores in one position. escape the doublicate arguments.
 

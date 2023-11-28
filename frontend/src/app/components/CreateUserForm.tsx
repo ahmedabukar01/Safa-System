@@ -17,6 +17,17 @@ const ROLES = [
   }
 ]
 
+const ACCESS = [
+  {
+    label: "TRUE",
+    value: "TRUE"
+  },
+  {
+    label: "FALSE",
+    value: "FALSE"
+  },
+]
+
 export default function CreateUserForm({onSubmit}: any) {
   const [roleBased, setRoleBased] = React.useState(false)
 
@@ -24,7 +35,7 @@ export default function CreateUserForm({onSubmit}: any) {
   console.log(admins, 'users')
     
     const onFinish = (values: any) => {
-
+      onSubmit(values)
     }
 
     const onChange = (e) => {
@@ -75,7 +86,17 @@ export default function CreateUserForm({onSubmit}: any) {
       </Form.Item>
       </Col>
     </Row>
-
+    <Row>
+      <Col span={24}>
+        <Form.Item
+        label="Access"
+        name="access"
+        rules={[{ required: true, message: 'Please input Access!' }]}
+        >
+        <Select options={ACCESS} placeholder="Access"/>
+      </Form.Item>
+      </Col>
+    </Row>
     <Row>
       <Col span={24}>
         <Form.Item
@@ -83,7 +104,7 @@ export default function CreateUserForm({onSubmit}: any) {
         name="role"
         rules={[{ required: true, message: 'Please input Role!' }]}
         >
-        <Select options={ROLES} onChange={onChange}/>
+        <Select options={ROLES} onChange={onChange} placeholder="Select User's Role"/>
       </Form.Item>
       </Col>
     </Row>

@@ -7,6 +7,7 @@ import {Request, Response} from 'express'
 
 export const authMutation = {
     register: async (_: any, {input}: any, {req, res, user}: any) => {
+        console.log("here in the server", input)
         const {password, email, ...rest} = input
 
         const userExists = await prisma.users.findUnique({where: {email}});
@@ -59,6 +60,10 @@ export const authMutation = {
         
             })
 
+            // lastlogged
+            const now = new Date();
+            await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
+
             return {
                 token,
                 id: user.id,
@@ -66,6 +71,7 @@ export const authMutation = {
                 role: user.role,
                 access: user.access
             }
+
         } else {
             throw new Error("invalid Credentials")
         }
