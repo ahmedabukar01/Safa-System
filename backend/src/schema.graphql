@@ -95,6 +95,11 @@ scalar Date
   price: Float
   categoryId: String
   }
+  
+  input ChangePasswordInput {
+    currentPassword: String!
+    newPassword: String!
+  }
 
   type StatusMessage {
     success: String
@@ -149,6 +154,7 @@ scalar Date
     deleteProduct(id: ID!): StatusMessage
     logout: StatusMessage
     createPayment(input: PaymentInput!): StatusMessage
+    changePassword(input: ChangePasswordInput!): StatusMessage
 
     # super user mutations
     register(input: UserInput): Payload  

@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Col, Form, Input, Row, Modal , Typography} from 'antd';
+import { useMutation } from '@apollo/client';
+import { ChangePasswordMutation, Logout } from '@/app/graphql';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { setUserRole } from '@/app/globalRedux/features/userSlice';
 
 const ChangePassword: React.FC = () => {
+  const [changePassword] = useMutation(ChangePasswordMutation)
+  const [logout, {data}] =  useMutation(Logout)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch()
+  const router = useRouter();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -16,8 +25,19 @@ const ChangePassword: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+    const res = await changePassword({variables: {input: {...values}}});
+    if(res.errors){
+      console.error("Error: ", res.errors);
+    }
 
+    const logingOut = await logout();
+    if(logingOut.errors){
+      console.error("Error: ", logingOut.errors)
+    }
+
+    dispatch(setUserRole(""))
+    router.push("/")
   }
 
   return (
@@ -41,17 +61,6 @@ const ChangePassword: React.FC = () => {
             onFinish={onFinish}
             style={{ maxWidth: 600, maxHeight: 900, display: 'flex', margin: 'auto', flexDirection: "column", justifyContent: "center", alignContent: "center" }}
           >
-            <Row >
-              <Col span={24}>
-                <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
-                >
-                <Input />
-              </Form.Item>
-              </Col>
-            </Row>
             <Row>
               <Col span={24}>
                 <Form.Item

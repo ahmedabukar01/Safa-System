@@ -134,3 +134,9 @@ export const RegisterUser = gql` mutation Register($input: UserInput) {
     role
   }
 }`
+
+export const ChangePasswordMutation = gql` mutation ChangePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    success
+  }
+}`
