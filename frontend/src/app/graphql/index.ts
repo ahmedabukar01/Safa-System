@@ -104,3 +104,39 @@ export const AllPaymentReport = gql` query {
     }
   }
 }`
+
+// users
+export const Admins = gql` query {
+    adminsOnly {
+    fullName
+    id
+  }
+}`
+
+export const AllClients = gql` query {
+  users {
+  email
+  role
+  adminBy
+  fullName
+  id
+  access
+  lastLogged
+  createdAt
+}
+}`
+
+export const RegisterUser = gql` mutation Register($input: UserInput) {
+  register(input: $input) {
+    id
+    fullName
+    access
+    role
+  }
+}`
+
+export const ChangePasswordMutation = gql` mutation ChangePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    success
+  }
+}`
