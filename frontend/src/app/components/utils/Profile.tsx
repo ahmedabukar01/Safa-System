@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { DownOutlined, UserAddOutlined } from '@ant-design/icons'
 import LogoutUser from '../auth/LogoutUser'
 import { useAppContext } from '@/app/lib/AppContext'
+import ChangePassword from '../auth/ChangePassword'
 
 const ProfileBadge: React.FC<any> = () => {
   const [userInfo, setUserInfo] = React.useState<any>('');
@@ -31,7 +32,7 @@ const ProfileBadge: React.FC<any> = () => {
       },
       {
         key: 2,
-        label: "Sittings",
+        label: <ChangePassword />,
       },
       {
         key: 3,
