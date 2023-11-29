@@ -9,7 +9,7 @@ export const getYourData = (user: any) => {
     }
 
     else if(user.role === 'USER'){
-        return user.adminBy;
+        return user.adminBy || ""; // may be improve here
     }
     else {
         return null

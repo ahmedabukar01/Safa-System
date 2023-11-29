@@ -1,4 +1,3 @@
-"use client"
 import Link from 'next/link'
 import { useAppContext } from './lib/AppContext';
 import { useRouter } from 'next/navigation';
@@ -13,10 +12,6 @@ export default function Home() {
 
   return (
     <LayoutTheme>
-    <h1>Welcome to Safa SuperMarket System </h1>
-    <Link href={'/login'}>Login</Link>
-    <Link href={'/test'}>test</Link>
-
     <PaymentBox />
     </LayoutTheme>
   )

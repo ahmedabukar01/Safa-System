@@ -20,6 +20,12 @@ const columns = [
     dataIndex: "category"
   },
   {
+    title: "Price",
+    key: "price",
+    dataIndex: "price"
+  },
+
+  {
     title: "createdAt",
     key: "createdAt",
     dataIndex: "createdAt"
