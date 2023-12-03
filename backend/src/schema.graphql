@@ -130,7 +130,7 @@ scalar Date
 
   type Query {
     users: [User!]!
-    user(id: ID!): User
+    me: User
     categories: [Category]
     category(id: ID!): Category
     products: [Product]!

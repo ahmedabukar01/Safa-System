@@ -26,10 +26,10 @@ export const usersQuery = {
         return prisma.users.findMany({where: {role: "ADMIN"}});
     },
 
-    user: async (_:any,{id}: uniqueId, {req, res, user} : any) => {
+    me: async (_:any,__:any, {req, res, user} : any) => {
+        auth(user);
+        const {id} = user;
         const SingleUser = await prisma.users.findUnique({where: {id}})
-
-        if(!SingleUser) throw new Error("User Doesn't Exists!")
 
         return SingleUser;
     },
