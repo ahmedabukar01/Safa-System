@@ -5,12 +5,14 @@ import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { SearchProduct } from '@/app/graphql'
 import Cart from './Cart'
 import { center } from '@/app/css/styles'
-import { RedLight, Testing, WarningAlert } from '../utils/alerts'
+import { RedLight, WarningAlert } from '../utils/alerts'
+import { Suspense } from 'react'
+import Loading from '../layouts/Loading'
 
 const { Title } = Typography
 
 export default function PaymentBox() {
-  const [cart, setCart] = React.useState<any>('')
+  const [cart, setCart] = React.useState<any>([])
   const [form] = Form.useForm();
   const {data, refetch} = useSuspenseQuery(SearchProduct, {variables: {productId: ""}});
 
@@ -64,12 +66,12 @@ export default function PaymentBox() {
 
 
   return (
-    <>
+    <div>
     <Title level={3} style={center}>Checkout Center</Title>
     <Form
     form={form}
     onFinish={OnFinish}
-    style={{marginBottom: "10px"}}
+    style={{marginBottom: "10px", width: '60vw', margin: 'auto'}}
     >
         <Row >
         <Col span={24}>
@@ -88,9 +90,10 @@ export default function PaymentBox() {
         </Col>
         </Row>
     </Form>
-
-    <Cart cart={cart} setCart={setCart}/>
-    </>
+    <Suspense fallback={<Loading />}>
+      <Cart cart={cart} setCart={setCart}/>
+    </Suspense>
+    </div>
 
   )
 }

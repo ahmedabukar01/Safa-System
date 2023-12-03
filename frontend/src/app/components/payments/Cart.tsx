@@ -3,6 +3,9 @@ import { Button, Divider, Input, InputNumber, Table, Typography } from 'antd'
 import { center } from '@/app/css/styles';
 import { useMutation } from '@apollo/client';
 import { SavePaymentReport } from '@/app/graphql';
+import Loading from '@/app/loading';
+import { Suspense } from 'react';
+import { GreenLight, RedLight } from '../utils/alerts';
 
 const {Title} = Typography
 
@@ -97,6 +100,7 @@ export default function Cart({cart, setCart}: any) {
   }, [totalCart]);
 
     // data resource
+    let customLoading = true;
     const data = totalCart ? totalCart?.map((item: any) => (
         {
             key: item?.productID,
@@ -106,36 +110,35 @@ export default function Cart({cart, setCart}: any) {
           }
     )) : '';
 
+    customLoading = false;
     data && checkout(data);
 
 
     const onFinish = async () => {
-      // const res = await createPayment({
-      //   variables: {input: {
-      //     total: parseFloat(localStorage.getItem("total")!),
-      //     items: totalCart
-      //   }}
-      // });
+      const res = await createPayment({
+        variables: {input: {
+          total: parseFloat(localStorage.getItem("total")!),
+          items: totalCart
+        }}
+      });
 
-      // if(res.errors){
-      //   console.error(res.errors)
-      // } 
-
-      // const res = parseFloat(localStorage.getItem("total")!)
-
-      // console.log(res,' the resssssss')
+      if(res.errors){
+        console.error(res.errors)
+        return RedLight("Error", `${res?.errors[0]?.extensions?.exception?.message}`)
+      } 
       
+      GreenLight("Success", "Payment Succussfully Saved");
       setCart([]) // @also clear lcoalStorage.
     }
 
   return (
-    <div style={center}>
+    <div style={{...center}}>
       <Divider />
       {
         cart.length > 0 && (
-        <>
+          <>
           <Title level={4}>Cart Items</Title>
-            <Table columns={columns} dataSource={data}/>
+            <Table columns={columns} dataSource={data} />
           <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
           <Button onClick={onFinish} type='primary' style={{background: "#22bb33"}}>Finish Checkout</Button>
          </>

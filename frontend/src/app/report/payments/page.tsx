@@ -11,7 +11,8 @@ const columns = [
       title: "Date",
       key: "date",
       dataIndex: "createdAt",
-      render: (d: any) => formatDate(d)
+      render: (d: any) => formatDate(d),
+      sorter: (a: any, b: any) => a?.total - b?.total,
     },
     {
       title: "Total Items",

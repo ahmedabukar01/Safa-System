@@ -49,6 +49,9 @@ const items: MenuItem[] = [
     getItem(<Link href={'/products'}>View Products</Link>, 'VP', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
     getItem(<Link href={'/products/create'}>Create Products</Link>, 'CP', [], null, ["ADMIN", "SUPER_ADMIN"]),
   ], ["ADMIN", "USER", "SUPER_ADMIN"]),
+  getItem(<Link href={"/report/payments"}>Reports</Link>, 'Reportsss', <UserOutlined />, [
+    getItem(<Link href={'/report/payments'}>Payments</Link>, 'VRP', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
+  ], ["ADMIN", "USER", "SUPER_ADMIN"]),
   getItem('Team', 'Teams', <TeamOutlined />, [getItem('Team 1', 'VT'), getItem('Team 2', '8')], ["ADMIN", "SUPER_ADMIN"]),
   getItem('Files', '9', <FileOutlined />),
 ];
