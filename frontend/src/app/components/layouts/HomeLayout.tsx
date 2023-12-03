@@ -106,7 +106,7 @@ const LayoutTheme: any = ({children}:any) => {
       <Layout>
         <div style={{display: "flex", justifyContent: "space-between", padding: "10px 5px"}}
         >
-          <Title level={2}>Safa</Title>
+          <Title level={2} style={{paddingLeft: "14px", cursor: "pointer"}}>Safa</Title>
           <ProfileBadge />
         </div>
       <Header style={{ padding: 0, background: colorBgContainer }} />
