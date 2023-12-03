@@ -3,6 +3,8 @@ import { useAppContext } from './lib/AppContext';
 import { useRouter } from 'next/navigation';
 import LayoutTheme from './components/layouts/HomeLayout';
 import PaymentBox from './components/payments/PaymentBox';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export default function Home() {
 
@@ -12,7 +14,9 @@ export default function Home() {
 
   return (
     <LayoutTheme>
-    <PaymentBox />
+      <Suspense fallback={<Loading />}>
+        <PaymentBox />
+      </Suspense>
     </LayoutTheme>
   )
 }

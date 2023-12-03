@@ -6,6 +6,7 @@ import { DownOutlined, UserAddOutlined } from '@ant-design/icons'
 import LogoutUser from '../auth/LogoutUser'
 import { useAppContext } from '@/app/lib/AppContext'
 import ChangePassword from '../auth/ChangePassword'
+import { project } from '@/app/utils/config'
 
 const ProfileBadge: React.FC<any> = () => {
   const [userInfo, setUserInfo] = React.useState<any>('');
@@ -22,7 +23,8 @@ const ProfileBadge: React.FC<any> = () => {
   const fullName = userInfo?.fullName
 
   const user = fullName?.substring(0,2) || 'UN'
-  const color = 'red'
+  const color = project.theme.colorPrimary;
+  
 
     // items
     const items: MenuProps['items'] = [

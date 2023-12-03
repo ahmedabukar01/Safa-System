@@ -94,7 +94,6 @@ export const AllPaymentReport = gql` query {
     payments {
     id
     total
-    createdBy
     createdAt
     items {
       amount
@@ -125,6 +124,19 @@ export const AllClients = gql` query {
   createdAt
 }
 }`
+
+export const GetMe = gql` query {
+  me{
+  email
+  role
+  adminBy
+  fullName
+  id
+  access
+  lastLogged
+  createdAt
+}
+}`;
 
 export const RegisterUser = gql` mutation Register($input: UserInput) {
   register(input: $input) {

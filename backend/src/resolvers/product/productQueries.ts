@@ -20,23 +20,25 @@ export const productQueries = {
         return data
     }, 
     product: async (_:any, {id}: any, {__, ___, user}: any) => {
-        console.log('the id',id)
         auth(user)
 
         const yours = getYourData(user);
-
-        const product = await prisma.products.findUnique({where: {
-            // combined unique fields, see in our schema
-           Proudct_id_identifier: {
-            productID: id,
-            createdBy: yours
-           }
-        },
-        include: {
-            category: true
+        try {
+            const product = await prisma.products.findUnique({where: {
+                // combined unique fields, see in our schema
+               Proudct_id_identifier: {
+                productID: id,
+                createdBy: yours
+               }
+            },
+            include: {
+                category: true
+            }
+        })
+    
+            return product;
+        } catch (error) {
+            console.log("Error",error)
         }
-    })
-
-        return product;
     }
 }
