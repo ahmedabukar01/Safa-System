@@ -10,6 +10,7 @@ import { SignIn } from '../graphql'
 import { useCookies } from 'next-client-cookies'
 import { useDispatch } from 'react-redux'
 import { setUserRole } from '../globalRedux/features/userSlice'
+import { GreenLight } from '../components/utils/alerts'
 
 export default function Login() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function Login() {
         const {access, fullName, role} = res.data?.signIn;
         localStorage.setItem("userInfo", JSON.stringify({fullName, role}))
         dispatch(setUserRole(role));
+        GreenLight("Success", "Logged in Successfully")
         router.push("/dashboard");
       }
 

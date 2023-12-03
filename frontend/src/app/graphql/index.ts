@@ -94,7 +94,6 @@ export const AllPaymentReport = gql` query {
     payments {
     id
     total
-    createdBy
     createdAt
     items {
       amount

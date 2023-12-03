@@ -1,14 +1,14 @@
 
 import { useSuspenseQuery } from '@apollo/client'
-import { Button, Col, Form, Input, InputNumber, Row , Select, Typography} from 'antd'
+import { Button, Col, Form,  Input, InputNumber, Row , Select, Typography} from 'antd'
 import { Categories } from '../graphql'
 import { GetCategories } from './utils/GetCategories'
 const {Title} = Typography
 
 export default function ProductsForm({onSubmit}: any) {
-      
+      const [form] = Form.useForm();
     const onFinish = (values: any) => {
-        onSubmit(values)
+        onSubmit(values, form);
     }
     const onFinishFailed = (error: any) => {
         console.log("failed: ", error);
@@ -22,6 +22,7 @@ export default function ProductsForm({onSubmit}: any) {
         <Title level={3} style={{textAlign:"center"}}>Create New Product</Title>
     </div>
      <Form
+     form={form}
     name="create Product form"
     onFinish={onFinish}
     onFinishFailed={onFinishFailed}

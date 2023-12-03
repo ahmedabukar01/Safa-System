@@ -5,6 +5,7 @@ import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { SearchProduct } from '@/app/graphql'
 import Cart from './Cart'
 import { center } from '@/app/css/styles'
+import { RedLight, Testing, WarningAlert } from '../utils/alerts'
 
 const { Title } = Typography
 
@@ -15,10 +16,21 @@ export default function PaymentBox() {
 
   const OnFinish = async (values: any) => {
     const value = values.productID;
+    form.resetFields();
 
     const res = await refetch({productId: value});
-    if(res.errors) {
-      console.error("Error", res.errors)
+    
+    if(!res.data.product) {
+      RedLight("Not Found", "No Product Founded")
+      return 
+    }
+
+    // WarningAlert("Warning", "Product Already in the Cart");
+
+    const existed = cart?.find(item => res.data.product.productID === item.productID)
+    if(existed){
+      WarningAlert("Warning", "Product Already in the Cart");
+      return;
     }
 
     console.log("after refetch", res.data)
@@ -35,14 +47,19 @@ export default function PaymentBox() {
 
     const existedItem = cart && cart.find(item => item.productID === product?.productID);
     if(existedItem) {
-      console.log("item already in the cart")
+      console.log("here")
+      WarningAlert("Warning", "Product Already in the Cart");
       return 
     }
 
     if(product?.price !== undefined){
       console.log('yes')
       setCart((prev) => [...prev, product])
-    }
+    } 
+    // else {
+    //   RedLight("Not Found", "No Product Found!!!");
+    // }
+      
   }, [data?.product]);
 
 
@@ -61,7 +78,7 @@ export default function PaymentBox() {
             name="productID"
             rules={[{ required: true, message: 'Please input Product ID!' }]}
             >
-            <Input autoFocus placeholder='Search By Product ID' />
+            <Input autoFocus placeholder='Search By Product ID'/>
         </Form.Item>
         </Col>
         </Row>

@@ -6,6 +6,7 @@ import { NewCategory, NewProduct } from "@/app/graphql";
 import { useRouter } from "next/navigation";
 import ProductsForm from "@/app/components/ProductForm";
 import {AdminOnly} from "@/app/components/auth/AdminOnly";
+import { GreenLight, RedLight } from "@/app/components/utils/alerts";
 
 export default function CreateProduct() {
   AdminOnly();
@@ -13,25 +14,23 @@ export default function CreateProduct() {
   const router = useRouter();
   const [createProduct] = useMutation(NewProduct)
   
-  const onSubmit = async (values: any) => {
-    console.log('values', values)
-
+  const onSubmit = async (values: any, form: any) => {
     const price = parseFloat(values?.price)
     console.log(price, 'price')
     
     const res = await createProduct({variables: {input: {
       ...values,
       price
-    }}})
-
-    console.log('res', res)
+    }}, errorPolicy: "all"})
 
     if(res.errors){
-      console.log(res.errors);
+      console.error(res.errors);
+      return RedLight("Error", `${res?.errors[0]?.extensions?.exception?.message}`)
+    } else {
+      GreenLight("Success", "Producted Created Succefully");
+      form?.resetFields();
+      // router.push('/products')
     }
-
-    console.log('products', res.data)
-    router.push('/products')
 
   }
 
