@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { SavePaymentReport } from '@/app/graphql';
 import Loading from '@/app/loading';
 import { Suspense } from 'react';
-import { GreenLight, RedLight } from '../utils/alerts';
+import { GreenLight, RedLight, WarningAlert } from '../utils/alerts';
 
 const {Title} = Typography
 
@@ -50,8 +50,7 @@ export default function Cart({cart, setCart}: any) {
       },
   ]
 
-  const onChange = (am,item) => {
-    const oldCarts = totalCart;
+  const onChange = (am: any,item: any) => {
 
     if(am > 0){
      const newCarts = totalCart.map((itemCart) => {
@@ -63,18 +62,17 @@ export default function Cart({cart, setCart}: any) {
         }
         return itemCart
       });
-
-      console.log(totalCart)
       // setTotalCart(newCarts)
       setCart(newCarts)
-      checkout(item,am)
+      // checkout() // this testing
 
     } else {
-      console.log('item cannot be les than 1', am)
+      console.log('item cannot be les than 1', am);
+      WarningAlert("Warning", "item cannot be less than 1");
     }
   }
 
-  // checkout
+  // checkout old one
   // const checkout  = (cart: [], amount: number = 0) => {
   //   let total: number =0;
 
@@ -87,7 +85,7 @@ export default function Cart({cart, setCart}: any) {
   // }
 
 
-  const checkout  = React.useMemo(() => (cart: [], amount: number = 0) => {
+  const checkout  = React.useMemo(() => () => {
     let total: number = 0;
     totalCart?.map(item => {
       // total += item?.price * (amount !==0 ? amount : 1);
@@ -100,7 +98,7 @@ export default function Cart({cart, setCart}: any) {
   }, [totalCart]);
 
     // data resource
-    let customLoading = true;
+    let customLoading = true; // may be later usage !!!
     const data = totalCart ? totalCart?.map((item: any) => (
         {
             key: item?.productID,
@@ -137,10 +135,12 @@ export default function Cart({cart, setCart}: any) {
       {
         cart.length > 0 && (
           <>
-          <Title level={4}>Cart Items</Title>
-            <Table columns={columns} dataSource={data} />
-          <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
-          <Button onClick={onFinish} type='primary' style={{background: "#22bb33"}}>Finish Checkout</Button>
+            {/* <Suspense fallback={<Loading />}> */}
+              <Title level={4}>Cart Items</Title>
+              <Table columns={columns} dataSource={data} />
+              <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
+              <Button onClick={onFinish} type='primary' style={{background: "#22bb33"}}>Finish Checkout</Button>
+            {/* </Suspense> */}
          </>
         )
       }

@@ -1,13 +1,19 @@
 "use client"
 import * as React from 'react'
-import { Button, Col, Form, Input, Row, Typography } from 'antd'
+import { Suspense } from 'react'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import dynamic from 'next/dynamic'
 import { SearchProduct } from '@/app/graphql'
-import Cart from './Cart'
+// import Cart from './Cart' 
+import { Button, Col, Form, Input, Row, Typography } from 'antd'
 import { center } from '@/app/css/styles'
 import { RedLight, WarningAlert } from '../utils/alerts'
-import { Suspense } from 'react'
 import Loading from '../layouts/Loading'
+const Cart = React.lazy(() => import('./Cart'))
+
+// const Cart = dynamic(() => import('./Cart'), {
+//   ssr: false,
+// })
 
 const { Title } = Typography
 
@@ -21,21 +27,21 @@ export default function PaymentBox() {
     form.resetFields();
 
     const res = await refetch({productId: value});
+    // await new Promise((resolve) => setTimeout(resolve, 4000))
     
     if(!res.data.product) {
       RedLight("Not Found", "No Product Founded")
+      // alert("Warning, Product already in the cart");
       return 
     }
 
-    // WarningAlert("Warning", "Product Already in the Cart");
+    // const existed = cart?.find(item => res.data.product.productID === item.productID)
+    // if(existed){
+    //   WarningAlert("Warning", "Product Already in the Cart");
+    //   return;
+    // }
 
-    const existed = cart?.find(item => res.data.product.productID === item.productID)
-    if(existed){
-      WarningAlert("Warning", "Product Already in the Cart");
-      return;
-    }
-
-    console.log("after refetch", res.data)
+    // console.log("after refetch", res.data)
     form.resetFields();
   };
 
@@ -50,6 +56,7 @@ export default function PaymentBox() {
     const existedItem = cart && cart.find(item => item.productID === product?.productID);
     if(existedItem) {
       console.log("here")
+      // alert("Warning, Product already in the cart");
       WarningAlert("Warning", "Product Already in the Cart");
       return 
     }
@@ -58,9 +65,6 @@ export default function PaymentBox() {
       console.log('yes')
       setCart((prev) => [...prev, product])
     } 
-    // else {
-    //   RedLight("Not Found", "No Product Found!!!");
-    // }
       
   }, [data?.product]);
 

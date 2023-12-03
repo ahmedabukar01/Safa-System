@@ -2,9 +2,13 @@
 
 import React, { useState } from 'react';
 import {
+  AreaChartOutlined,
+  CalculatorOutlined,
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -39,17 +43,18 @@ function getItem(
 const ALLOWED_ROLES = ["ADMIN", "SUPER_ADMIN"]
 
 const items: MenuItem[] = [
-  getItem(<Link href={'/'}>Home</Link>, '1', <PieChartOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
+  getItem(<Link href={'/'}>Dashboard</Link>, '1', <AreaChartOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
+  getItem(<Link href={'/'}>Checkout</Link>, '2', <CalculatorOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
 //  getItem(<Link href={"/categories"}>Categories</Link>, '2', <DesktopOutlined />),
-  getItem(<Link href={"/categories"}>Categories</Link>, 'Category', <UserOutlined />, [
+  getItem(<Link href={"/categories"}>Categories</Link>, 'Category', <ShoppingOutlined /> , [
     getItem(<Link href={'/categories'}>View Categories</Link>, 'VC', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
     getItem(<Link href={'/categories/create'} >Create Category</Link>, 'CC', null, null, ["ADMIN", "SUPER_ADMIN"]),
   ], ["ADMIN", "USER", "SUPER_ADMIN"]),
-  getItem(<Link href={"/products"}>Products</Link>, 'Products', <UserOutlined />, [
+  getItem(<Link href={"/products"}>Products</Link>, 'Products', <ShoppingCartOutlined />, [
     getItem(<Link href={'/products'}>View Products</Link>, 'VP', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
     getItem(<Link href={'/products/create'}>Create Products</Link>, 'CP', [], null, ["ADMIN", "SUPER_ADMIN"]),
   ], ["ADMIN", "USER", "SUPER_ADMIN"]),
-  getItem(<Link href={"/report/payments"}>Reports</Link>, 'Reportsss', <UserOutlined />, [
+  getItem(<Link href={"/report/payments"}>Reports</Link>, 'Reportsss', <PieChartOutlined />, [
     getItem(<Link href={'/report/payments'}>Payments</Link>, 'VRP', null, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
   ], ["ADMIN", "USER", "SUPER_ADMIN"]),
   getItem('Team', 'Teams', <TeamOutlined />, [getItem('Team 1', 'VT'), getItem('Team 2', '8')], ["ADMIN", "SUPER_ADMIN"]),

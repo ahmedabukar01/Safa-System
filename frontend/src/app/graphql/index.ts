@@ -125,6 +125,19 @@ export const AllClients = gql` query {
 }
 }`
 
+export const GetMe = gql` query {
+  me{
+  email
+  role
+  adminBy
+  fullName
+  id
+  access
+  lastLogged
+  createdAt
+}
+}`;
+
 export const RegisterUser = gql` mutation Register($input: UserInput) {
   register(input: $input) {
     id

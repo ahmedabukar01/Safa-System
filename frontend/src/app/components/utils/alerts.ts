@@ -1,4 +1,4 @@
-import { notification } from "antd";
+import { App, notification } from "antd";
 import type { NotificationPlacement } from 'antd/es/notification/interface';
 
 export const GreenLight = (
@@ -20,6 +20,14 @@ export const GreenLight = (
     });
 
   };
+
+  // export const RedLight = (title: string, description: string) => {
+  //   const { message } = App.useApp();
+
+  //   message.error(`${title} ${description}`);
+
+  // };
+
     
   export const WarningAlert = (title: string, description: string) => {
     notification.warning({
