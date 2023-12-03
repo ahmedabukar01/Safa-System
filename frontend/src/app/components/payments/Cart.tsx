@@ -48,7 +48,16 @@ export default function Cart({cart, setCart}: any) {
                     />
         }
       },
+      {
+        title: "Remove", 
+        key: "remove",
+        render: (item: any) => (<Button danger type='text' onClick={(e) => removeItem(item)}>Remove</Button>)
+      }
   ]
+
+  const removeItem = (item: any) => {
+    setCart(cart.filter((crt) => crt.productID !== item.productID));
+  }
 
   const onChange = (am: any,item: any) => {
 
