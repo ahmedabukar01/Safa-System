@@ -20,6 +20,8 @@ alter user safa WITH superuser;
 ### Backend 
 * cd backend
 * pnpm install
+* pnpm migrate:dev
+* npx prisma db seed
 * pnpm dev
 
 ### frontend
