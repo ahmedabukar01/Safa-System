@@ -4,7 +4,7 @@ Point Of Sell System (POS)
 # TECH STACK
 ## Nextjs 13 / Node/ Express / Apoll-Server / Graphql / Prisma / Postgresql
 
-## Safa System PostgreSQL Database.
+## PostgreSQL Database.
 user: safa
 database name: safa_db
 database password: 'safaSystem@2022’
