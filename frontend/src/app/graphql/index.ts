@@ -104,6 +104,20 @@ export const AllPaymentReport = gql` query {
   }
 }`
 
+export const FindPayment = gql` query FindPayment($findPaymentId: ID!) {
+  findPayment(id: $findPaymentId) {
+    id
+    items {
+      amount
+      price
+      productID
+      productName
+    }
+    createdAt
+    total
+  }
+}`
+
 // users
 export const Admins = gql` query {
     adminsOnly {

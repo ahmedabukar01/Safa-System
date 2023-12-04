@@ -10,7 +10,7 @@ import { SignIn } from '../graphql'
 import { useCookies } from 'next-client-cookies'
 import { useDispatch } from 'react-redux'
 import { setUserRole } from '../globalRedux/features/userSlice'
-import { GreenLight } from '../components/utils/alerts'
+import { GreenLight, RedLight } from '../components/utils/alerts'
 
 export default function Login() {
   const router = useRouter();
@@ -31,6 +31,7 @@ export default function Login() {
 
       if(res?.errors){
         console.log('errors', res.errors)
+        RedLight("Error", `invalid Credentials`)
       } else{
         const {access, fullName, role} = res.data?.signIn;
         localStorage.setItem("userInfo", JSON.stringify({fullName, role}))
@@ -43,8 +44,6 @@ export default function Login() {
 
   return (
     <>
-    <Link href={'/'}>home</Link>
-    <Link href={'/test'}>test</Link>
     <LoginForm onSubmit={OnSubmit}/>
     </>
   )

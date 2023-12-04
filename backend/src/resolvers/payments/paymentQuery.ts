@@ -17,7 +17,29 @@ export const paymentQueries = {
         }
     });
 
-    console.log('all', res)
     return res
+   },
+
+   findPayment: async (_:any, {id}: any, {__, ___, user}: any) => {
+    console.log("id", id);
+
+    const yourData = getYourData(user);
+
+    try {
+        const res = await prisma.payments.findUnique({where: {
+            createdBy: yourData,
+            id
+        }, 
+        include: {
+            items: true
+        }
+    });
+
+        return res;
+
+    } catch (error) {
+        console.log("Error: ", error);
+    }
    }
+
 }

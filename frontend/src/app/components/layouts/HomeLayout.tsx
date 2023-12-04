@@ -43,7 +43,7 @@ function getItem(
 const ALLOWED_ROLES = ["ADMIN", "SUPER_ADMIN"]
 
 const items: MenuItem[] = [
-  getItem(<Link href={'/'}>Dashboard</Link>, '1', <AreaChartOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
+  getItem(<Link href={'/dashboard'}>Dashboard</Link>, '1', <AreaChartOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
   getItem(<Link href={'/'}>Checkout</Link>, '2', <CalculatorOutlined />, null, ["ADMIN", "SUPER_ADMIN", "USER"]),
 //  getItem(<Link href={"/categories"}>Categories</Link>, '2', <DesktopOutlined />),
   getItem(<Link href={"/categories"}>Categories</Link>, 'Category', <ShoppingOutlined /> , [
@@ -97,7 +97,7 @@ const LayoutTheme: any = ({children}:any) => {
     <Layout style={{ minHeight: '100vh' }} >
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={perMittedMenu} 
+        <Menu theme="dark" defaultSelectedKeys={['2']} mode="inline" items={perMittedMenu} 
         style={{
           // color: project.theme.colorPrimary,
           // background: project.theme.secondaryColor
@@ -109,9 +109,9 @@ const LayoutTheme: any = ({children}:any) => {
           <Title level={2} style={{paddingLeft: "14px", cursor: "pointer"}}>Safa</Title>
           <ProfileBadge />
         </div>
-      <Header style={{ padding: 0, background: colorBgContainer }} />
+      {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
         <Content style={{ margin: '0'}}>
-          <div style={{ padding: 24, minHeight: "80vh", background: colorBgContainer }}>
+          <div style={{ padding: '20px 15px', minHeight: "85vh", background: colorBgContainer }}>
             {children}
           </div>
         </Content>
