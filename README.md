@@ -12,7 +12,7 @@ database password: 'safaSystem@2022’
 CREATE USER safa WITH PASSWORD 'safaSystem@2022';
 CREATE DATABASE safa_db WITH OWNER safa;
 
--- permessions
+#### permessions
 grant all on DATABASE safa_db to safa.;
 alter user safa WITH superuser;
 
