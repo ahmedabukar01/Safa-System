@@ -1,24 +1,30 @@
 import prisma from "../src/database/configDB";
+import bcrypt from "bcryptjs"
 
 async function main() {
+    // const password ="12345678"
+    const salt = await bcrypt.genSalt(10);
+    const hashed = await bcrypt.hash("12345678", salt)
+    
     const omar = await prisma.users.upsert({
         where: {email: "omar@gmail.com"},
         update: {},
         create: {
             fullName: "Omar",
             email: "omar@gmail.com",
-            password: "12345678",
+            password: hashed,
             role: "SUPER_ADMIN",
             access: true,
         }
     });
+    
     const ahmed = await prisma.users.upsert({
         where: {email: "ahmed@gmail.com"},
         update: {},
         create: {
             fullName: "Ahmed",
             email: "ahmed@gmail.com",
-            password: "12345678",
+            password: hashed,
             role: "SUPER_ADMIN",
             access: true,
         }
@@ -30,13 +36,25 @@ async function main() {
         create: {
             fullName: "Safa",
             email: "safa@gmail.com",
-            password: "12345678",
+            password: hashed,
             role: "ADMIN",
             access: true,
         }
     });
 
-    console.log({ahmed, omar,safa})
+    const ali = await prisma.users.upsert({
+        where: {email: "ali@gmail.com"},
+        update: {},
+        create: {
+            fullName: "Ali",
+            email: "ali@gmail.com",
+            password: hashed,
+            role: "USER",
+            access: true,
+        }
+    });
+
+    console.log({ahmed, omar, safa, ali})
 }
 
 main()
