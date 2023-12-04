@@ -2,9 +2,13 @@
 import React from 'react'
 import { AllPaymentReport } from '@/app/graphql'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { Button, Table } from 'antd'
+import { Button, Space, Table, Typography } from 'antd'
 import { formatDate } from '@/app/components/utils/Dates'
 import { ColumnSorter } from '@/app/components/utils/general'
+import ReportDetails from '@/app/components/payments/ReportDetails'
+import Link from 'next/link'
+
+const {Title} = Typography;
 
 const columns = [
     {
@@ -22,7 +26,7 @@ const columns = [
       sorter: (a: any, b: any) => ColumnSorter(a?.items?.length, b?.items?.length)
     },
     {
-      title: "Total Amount",
+      title: "Total Price",
       key: "totalAmount",
       dataIndex: "total",
       sorter: (a: any, b: any) => a?.total - b?.total,
@@ -30,9 +34,10 @@ const columns = [
     {
       title: "Action",
       key: "action",
-      render: () => {
+      render: (item: any) => {
         return (
-          <Button>View Details</Button>
+          <Link href={`/report/payments/${item?.id}`}><Button>View Details</Button></Link>
+          // <ReportDetails />
         )
       }
     },
@@ -43,6 +48,9 @@ export default function PaymentReport() {
     console.log('dd', data);
   return (
     <>
+    <Space>
+      <Title level={2}>Your Latest Transections</Title>
+    </Space>
     <Table columns={columns} dataSource={data?.payments} />
     </>
   )

@@ -1,5 +1,6 @@
 import prisma from "../../database/configDB";
 import { auth } from "../../utils/auth";
+import { getYourData } from "../../utils/getYourData";
 
 export const paymentMutations = {
     createPayment: async (_: any, {input}: any, {__, ___, user}: any) => {
@@ -7,19 +8,18 @@ export const paymentMutations = {
         auth(user);
 
         const {total} = input;
+        const sharedId = getYourData(user);
 
         try {
             const res = await prisma.payments.create({
                 data: {
                     total,
-                    createdBy: user.id,
+                    createdBy: sharedId,
                     items: {
                         createMany: {data: input.items}
                     }
                 }
             });
-
-            console.log('res', res);
 
             return res;
         } catch (error) {

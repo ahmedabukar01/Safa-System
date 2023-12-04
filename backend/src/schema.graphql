@@ -136,6 +136,7 @@ scalar Date
     products: [Product]!
     product(id: ID!): Product
     payments: [Payment]
+    findPayment(id: ID!): Payment
     adminsOnly: [User]!
     # refreshToken: StatusMessage
 
