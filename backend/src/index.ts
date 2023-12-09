@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { GraphQLError, GraphQLObjectType, GraphQLSchema } from "graphql";
 import { ApolloServer, gql } from "apollo-server-express";
 import { resolve } from "path";
+import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 import fs from 'fs'
 import prisma from "./database/configDB";
 import { usersQuery } from "./resolvers/users/usersQuery";
@@ -61,6 +62,9 @@ const server = new ApolloServer({
     resolvers, 
     typeDefs,
     csrfPrevention: true,
+    cache: new InMemoryLRUCache({
+        maxSize: 1024, // limit the cache size to 1024 MB
+    }),
     context: async ({req, res}) => { 
 
         // be care full in these auth, //@ you should improve it and test it.
