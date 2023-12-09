@@ -5,11 +5,11 @@ Point Of Sell System (POS)
 ## Nextjs 13 / Node/ Express / Apoll-Server / Graphql / Prisma / Postgresql
 
 ## PostgreSQL Database.
-user: safa
-database name: safa_db
-database password: 'safaSystem@2022’
+user: safa\
+database name: safa_db\
+database password: 'safaSystem@2022’\
 ### Guide
-CREATE USER safa WITH PASSWORD 'safaSystem@2022';
+CREATE USER safa WITH PASSWORD 'safaSystem@2022';\
 CREATE DATABASE safa_db WITH OWNER safa;
 
 #### permessions
