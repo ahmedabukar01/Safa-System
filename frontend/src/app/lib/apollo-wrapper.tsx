@@ -13,7 +13,7 @@ import {
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { useCookies } from "next-client-cookies";
-console.log('haaa',process.env.BACKEND_URL)
+
 function makeClient(token: any) {
   const httpLink = new HttpLink({
       // https://studio.apollographql.com/public/spacex-l4uc6p/
