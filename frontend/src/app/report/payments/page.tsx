@@ -46,7 +46,6 @@ const columns = [
 
 export default function PaymentReport() {
     const {data, networkStatus} = useSuspenseQuery(AllPaymentReport);
-    console.log('dd', data);
   return (
     <>
       <Title level={2} style={center}>Your Latest Transections</Title>
