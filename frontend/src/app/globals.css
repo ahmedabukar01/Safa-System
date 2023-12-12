@@ -85,6 +85,18 @@ body {
   overflow-x: hidden;
 }
 
+.background {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.753), rgba(0, 0, 0, 0.699) ), url("back.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* filter: blur(1px); */
+}
+
+
 /* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

@@ -44,7 +44,9 @@ export default function Login() {
 
   return (
     <>
+    <div className='background'> 
     <LoginForm onSubmit={OnSubmit}/>
+    </div>
     </>
   )
 }

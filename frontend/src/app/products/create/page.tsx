@@ -16,7 +16,6 @@ export default function CreateProduct() {
   
   const onSubmit = async (values: any, form: any) => {
     const price = parseFloat(values?.price)
-    console.log(price, 'price')
     
     const res = await createProduct({variables: {input: {
       ...values,
