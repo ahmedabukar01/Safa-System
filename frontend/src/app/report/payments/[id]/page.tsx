@@ -12,8 +12,6 @@ const {Title } = Typography
 export default function SinglePayment({params}: {params: {id: string}}) {
     const {id} = params;
     const {data,error} = useSuspenseQuery(FindPayment, {variables: {findPaymentId: id}});
-
-    console.log('data', data)
     
   return (
     <div style={center}>
