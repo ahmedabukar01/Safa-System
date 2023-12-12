@@ -73,13 +73,10 @@ const server = new ApolloServer({
         // cookies token
         let token = null;
 
-        console.log("length", req.headers.cookie)
         if(req.headers.cookie){
             try {
                 const id = req?.headers.cookie;
                 token = id.substring(3) 
-
-                console.log('here', id, 'and', token)
 
                 if(!token) return {req, res};  // i did this just to prevent the server to crash out. or not to stop. cuz if i use throw new error or graphqlError the server won't work and throws error because it's in the context.
 
@@ -113,7 +110,6 @@ const server = new ApolloServer({
             // throw new Error('no authorized no token!')
         }
 
-        console.log('tokenserver', token)
         return {req, res}
     }
 

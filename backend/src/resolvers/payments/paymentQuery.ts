@@ -21,7 +21,6 @@ export const paymentQueries = {
    },
 
    findPayment: async (_:any, {id}: any, {__, ___, user}: any) => {
-    console.log("id", id);
 
     const yourData = getYourData(user);
 
