@@ -7,12 +7,14 @@ async function main() {
     const bocorhashed = await bcrypt.hash("#abdirah#safa@2023", salt);
     const ahmedhashed = await bcrypt.hash("#ahmed#nur@34@2023", salt);
     
+    await prisma.users.deleteMany();
+    
     const bocor = await prisma.users.upsert({
-        where: {email: "bocor@gmail.com"},
+        where: {email: "bocor@safaa.systems"},
         update: {},
         create: {
             fullName: "Abdirahman Bocor",
-            email: "bocor@safaa.system.com",
+            email: "bocor@safaa.systems",
             password: bocorhashed,
             role: "ADMIN",
             access: true,
@@ -20,11 +22,11 @@ async function main() {
     });
     
     const ahmed = await prisma.users.upsert({
-        where: {email: "ahmed@safaa.system.com"},
+        where: {email: "ahmed@safaa.systems"},
         update: {},
         create: {
             fullName: "Ahmed",
-            email: "ahmed@gmail.com",
+            email: "ahmed@safaa.systems",
             password: ahmedhashed,
             role: "SUPER_ADMIN",
             access: true,
