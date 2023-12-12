@@ -22,6 +22,7 @@ export default function LoginForm({onSubmit}: {onSubmit: any}) {
       alignContent: "cneter",
       alignItems: "center", 
       margin: "auto",
+      // background: "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(33,50,180,0.7147233893557423) 10%, rgba(36,31,207,0.8860731792717087) 22%, rgba(0,212,255,1) 100%)"
       // background: "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(90,103,201,0.9533000700280112) 10%, rgba(36,31,207,0.8860731792717087) 74%, rgba(0,212,255,1) 100%)"
     }}>
         <div style={{margin: '4em auto', textAlign: "center"}} >
