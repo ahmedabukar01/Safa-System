@@ -4,57 +4,34 @@ import bcrypt from "bcryptjs"
 async function main() {
     // const password ="12345678"
     const salt = await bcrypt.genSalt(10);
-    const hashed = await bcrypt.hash("12345678", salt)
-    
-    const omar = await prisma.users.upsert({
-        where: {email: "omar@gmail.com"},
+    const bocorhashed = await bcrypt.hash("#abdirah#safa@2023", salt);
+    const ahmedhashed = await bcrypt.hash("#ahmed#nur@34@2023", salt);
+
+    const bocor = await prisma.users.upsert({
+        where: {email: "bocor@safaa.systems"},
         update: {},
         create: {
-            fullName: "Omar",
-            email: "omar@gmail.com",
-            password: hashed,
-            role: "SUPER_ADMIN",
+            fullName: "Abdirahman Bocor",
+            email: "bocor@safaa.systems",
+            password: bocorhashed,
+            role: "ADMIN",
             access: true,
         }
     });
     
     const ahmed = await prisma.users.upsert({
-        where: {email: "ahmed@gmail.com"},
+        where: {email: "ahmed@safaa.systems"},
         update: {},
         create: {
             fullName: "Ahmed",
-            email: "ahmed@gmail.com",
-            password: hashed,
+            email: "ahmed@safaa.systems",
+            password: ahmedhashed,
             role: "SUPER_ADMIN",
             access: true,
         }
     });
 
-    const safa = await prisma.users.upsert({
-        where: {email: "safa@gmail.com"},
-        update: {},
-        create: {
-            fullName: "Safa",
-            email: "safa@gmail.com",
-            password: hashed,
-            role: "ADMIN",
-            access: true,
-        }
-    });
-
-    const ali = await prisma.users.upsert({
-        where: {email: "ali@gmail.com"},
-        update: {},
-        create: {
-            fullName: "Ali",
-            email: "ali@gmail.com",
-            password: hashed,
-            role: "USER",
-            access: true,
-        }
-    });
-
-    console.log({ahmed, omar, safa, ali})
+    console.log({ahmed, bocor})
 }
 
 main()

@@ -7,6 +7,7 @@ import { formatDate } from '@/app/components/utils/Dates'
 import { ColumnSorter } from '@/app/components/utils/general'
 import ReportDetails from '@/app/components/payments/ReportDetails'
 import Link from 'next/link'
+import { center } from '@/app/css/styles'
 
 const {Title} = Typography;
 
@@ -45,12 +46,9 @@ const columns = [
 
 export default function PaymentReport() {
     const {data, networkStatus} = useSuspenseQuery(AllPaymentReport);
-    console.log('dd', data);
   return (
     <>
-    <Space>
-      <Title level={2}>Your Latest Transections</Title>
-    </Space>
+      <Title level={2} style={center}>Your Latest Transections</Title>
     <Table columns={columns} dataSource={data?.payments} />
     </>
   )

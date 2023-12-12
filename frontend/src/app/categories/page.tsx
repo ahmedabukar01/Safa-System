@@ -2,6 +2,8 @@
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 import { Table } from 'antd'
 import { Categories } from '../graphql'
+import { formatDate } from "../components/utils/Dates"
+import { ColumnSorter } from "../components/utils/general"
 
 const columns = [
   {
@@ -15,15 +17,18 @@ const columns = [
     dataIndex: "description"
   },
   {
-    title: "createdAt",
-    key: "createdAt",
-    dataIndex: "createdAt"
-  },
-  {
     title: "Products",
     key: "products",
-    dataIndex: "products"
+    dataIndex: "products",
+    sorter: (a: any, b: any) => ColumnSorter(a?.products, b?.products)
   },
+  {
+    title: "createdAt",
+    key: "createdAt",
+    dataIndex: "createdAt",
+    render: (d: any) => formatDate(d),
+    sorter: (a: any, b: any) => ColumnSorter(a?.createdAt, b?.createdAt)
+  }
 ]
 
 export default function AllCategories() {
