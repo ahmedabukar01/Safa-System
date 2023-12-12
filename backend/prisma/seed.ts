@@ -6,9 +6,7 @@ async function main() {
     const salt = await bcrypt.genSalt(10);
     const bocorhashed = await bcrypt.hash("#abdirah#safa@2023", salt);
     const ahmedhashed = await bcrypt.hash("#ahmed#nur@34@2023", salt);
-    
-    await prisma.users.deleteMany();
-    
+
     const bocor = await prisma.users.upsert({
         where: {email: "bocor@safaa.systems"},
         update: {},
