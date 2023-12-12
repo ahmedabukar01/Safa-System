@@ -7,7 +7,6 @@ import { Prisma } from "@prisma/client";
 export const categoryMutation = {
     createCategory: async (_:any, {input}: any, {__, ___, user}: any) => {
     
-        console.log('the user ',user)
         auth(user);
         adminOnly(user)
 
