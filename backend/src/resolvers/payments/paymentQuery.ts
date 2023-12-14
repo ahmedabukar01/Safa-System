@@ -9,6 +9,9 @@ export const paymentQueries = {
     const yourData = getYourData(user);
     
     const res = await prisma.payments.findMany({
+        orderBy:{
+            createdAt: "desc"
+        },
         where: {
             createdBy: yourData,
         },
