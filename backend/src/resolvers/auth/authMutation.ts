@@ -65,7 +65,8 @@ export const authMutation = {
 
             // lastlogged
             const now = new Date();
-            user.email !== "ahmed@gmail.com" && await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
+            await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
+            // user.email !== "ahmed@gmail.com" && await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
 
             return {
                 token,

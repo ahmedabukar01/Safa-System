@@ -4,7 +4,6 @@ import { getYourData } from "../../utils/getYourData";
 
 export const paymentMutations = {
     createPayment: async (_: any, {input}: any, {__, ___, user}: any) => {
-        console.log('input payment', input);
         auth(user);
 
         const {total} = input;
