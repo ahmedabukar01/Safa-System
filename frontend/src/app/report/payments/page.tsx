@@ -45,7 +45,7 @@ const columns = [
   ]
 
 export default function PaymentReport() {
-    const {data, networkStatus} = useSuspenseQuery(AllPaymentReport);
+    const {data, networkStatus} = useSuspenseQuery(AllPaymentReport, {fetchPolicy: "no-cache"});
   return (
     <>
       <Title level={2} style={center}>Your Latest Transections</Title>
