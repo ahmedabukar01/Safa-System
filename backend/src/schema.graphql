@@ -101,6 +101,11 @@ scalar Date
     newPassword: String!
   }
 
+  input Filters {
+    startDate: String
+    endDate: String
+  }
+
   type StatusMessage {
     success: String
   }
@@ -128,6 +133,7 @@ scalar Date
     access: String
   }
 
+
   type Query {
     users: [User!]!
     me: User
@@ -135,7 +141,7 @@ scalar Date
     category(id: ID!): Category
     products: [Product]!
     product(id: ID!): Product
-    payments: [Payment]
+    payments(filters: Filters): [Payment]
     findPayment(id: ID!): Payment
     adminsOnly: [User]!
     # refreshToken: StatusMessage

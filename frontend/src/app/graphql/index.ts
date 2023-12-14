@@ -90,8 +90,8 @@ export const SavePaymentReport = gql` mutation CreatePayment($input: PaymentInpu
   }
 }`
 
-export const AllPaymentReport = gql` query {
-    payments {
+export const AllPaymentReport = gql` query Payments($filters: Filters){
+    payments(filters: $filters){
     id
     total
     createdAt
