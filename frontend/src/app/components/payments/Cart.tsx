@@ -6,11 +6,14 @@ import { SavePaymentReport } from '@/app/graphql';
 import Loading from '@/app/loading';
 import { Suspense } from 'react';
 import { GreenLight, RedLight, WarningAlert } from '../utils/alerts';
+import { Printer } from './Printer';
+import { useReactToPrint } from 'react-to-print';
 
 const {Title} = Typography
 
 export default function Cart({cart, setCart}: any) {
   const [totalCart, setTotalCart] = React.useState<any>([]);
+  const componentRef = React.useRef(null);
   const [createPayment] = useMutation(SavePaymentReport)
 
   React.useEffect(() => {
@@ -138,6 +141,11 @@ export default function Cart({cart, setCart}: any) {
       setCart([]) // @also clear lcoalStorage.
     }
 
+    const handlePrint = useReactToPrint({
+      content: () => componentRef.current,
+    });
+
+    // return <Printer />
   return (
     <div style={{...center}}>
       <Divider />
@@ -146,9 +154,12 @@ export default function Cart({cart, setCart}: any) {
           <>
             {/* <Suspense fallback={<Loading />}> */}
               <Title level={4}>Cart Items</Title>
+              <div ref={componentRef}>
               <Table columns={columns} dataSource={data} />
               <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
+              </div>
               <Button onClick={onFinish} type='primary' style={{background: "#22bb33"}}>Finish Checkout</Button>
+              <Button onClick={handlePrint} type='primary' style={{marginLeft: "10px"}}>Print</Button>
             {/* </Suspense> */}
          </>
         )

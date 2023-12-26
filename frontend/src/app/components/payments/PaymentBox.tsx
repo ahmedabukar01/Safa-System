@@ -20,7 +20,7 @@ const { Title } = Typography
 export default function PaymentBox() {
   const [cart, setCart] = React.useState<any>([])
   const [form] = Form.useForm();
-  const {data, refetch} = useSuspenseQuery(SearchProduct, {variables: {productId: ""}});
+  const {data, refetch} = useSuspenseQuery(SearchProduct, {variables: {productId: ""}, fetchPolicy: "no-cache"});
 
   const OnFinish = async (values: any) => {
     const value = values.productID;
