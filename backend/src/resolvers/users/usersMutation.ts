@@ -1,5 +1,5 @@
 import prisma from "../../database/configDB"
-import { auth, superAdmin } from "../../utils/auth";
+import { adminOnly, auth, superAdmin } from "../../utils/auth";
 import bcrypt from 'bcryptjs'
 
 export const usersMutation = {
@@ -28,5 +28,27 @@ export const usersMutation = {
         })
         
         return res
+    },
+    updateBrandName: async (_: any, {input}: any, {__,___, user}: any) => {
+        auth(user);
+        adminOnly(user);
+
+        const userId = user?.id 
+        const {brandName} = input;
+
+        try {
+            await prisma.users.update({
+                where: {id: userId},
+                data: {
+                    brandName: brandName
+                }
+            })
+
+            return {
+                success: "Brand Name Succefuly updated"
+            }
+        } catch (error) {
+            console.error("Error: ", error)
+        }
     }
 }

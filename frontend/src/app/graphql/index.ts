@@ -145,6 +145,7 @@ export const GetMe = gql` query {
   role
   adminBy
   fullName
+  brandName
   id
   access
   lastLogged
@@ -163,6 +164,13 @@ export const RegisterUser = gql` mutation Register($input: UserInput) {
 
 export const ChangePasswordMutation = gql` mutation ChangePassword($input: ChangePasswordInput!) {
   changePassword(input: $input) {
+    success
+  }
+}`
+
+// print
+export const UpdateBrandName = gql` mutation UpdateBrandName($input: UpdateBrandNameInput) {
+  updateBrandName(input: $input) {
     success
   }
 }`

@@ -7,6 +7,7 @@ scalar Date
     role: Role!
     email: String!
     adminBy: String
+    brandName: String
     password: String!
     access: Boolean
     lastLogged: Date
@@ -87,6 +88,9 @@ scalar Date
     items: [OrderInfoInput]
     total: Float
   }
+   input UpdateBrandNameInput {
+    brandName: String
+  }
 
   input UpdateProductInput {
   productID: String
@@ -162,6 +166,7 @@ scalar Date
     logout: StatusMessage
     createPayment(input: PaymentInput!): StatusMessage
     changePassword(input: ChangePasswordInput!): StatusMessage
+    updateBrandName(input: UpdateBrandNameInput): StatusMessage
 
     # super user mutations
     register(input: UserInput): Payload  
