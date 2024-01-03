@@ -164,7 +164,7 @@ export default function Cart({cart, setCart}: any) {
       content: () => componentRef.current,
     });
 
-    const brandName = JSON.parse(localStorage.getItem("brandName")!);
+    const brandName = JSON?.parse(localStorage?.getItem("brandName")!) || "Company Name";
 
   return (
     <div style={{...center}}>
@@ -179,7 +179,7 @@ export default function Cart({cart, setCart}: any) {
 
               <div ref={componentRef} className='print' style={{textAlign: "center", padding: "20px, 10px"}}>
               <p>Date: {formatDateTime(Date())}</p>
-              <Title level={4}>{brandName ? brandName : "Company Name"}</Title>
+              <Title level={4}>{brandName}</Title>
               <Table columns={columnsToPrint} dataSource={totalCart} />
               <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
               </div>
