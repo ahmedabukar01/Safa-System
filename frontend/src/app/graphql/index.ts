@@ -104,6 +104,15 @@ export const AllPaymentReport = gql` query Payments($filters: Filters){
   }
 }`
 
+export const PaymentDash = gql` query {
+  paymentsReport{
+  items {
+    amount
+    productName
+  }
+}
+}`
+
 export const FindPayment = gql` query FindPayment($findPaymentId: ID!) {
   findPayment(id: $findPaymentId) {
     id
@@ -172,5 +181,16 @@ export const ChangePasswordMutation = gql` mutation ChangePassword($input: Chang
 export const UpdateBrandName = gql` mutation UpdateBrandName($input: UpdateBrandNameInput) {
   updateBrandName(input: $input) {
     success
+  }
+}`
+
+// dashboard
+export const dashboardCount = gql` query {
+  dashCount {
+    numOfCategoreis,
+    numOfPayments,
+    numOfProducts,
+    numOfUsers
+
   }
 }`
