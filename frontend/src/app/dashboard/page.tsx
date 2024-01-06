@@ -2,6 +2,7 @@
 import React from 'react'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 import { PaymentDash, dashboardCount } from '../graphql';
+import { DonutChart } from '../statitics/donutChart';
 
 export default function Dashboard() {
   const {data} = useSuspenseQuery(dashboardCount);
@@ -24,8 +25,16 @@ export default function Dashboard() {
     })
     })
 
-  console.log('resut',dash)
+
+
+
+  console.log(' sleort', dash)
+  const seriesV = Object.values(dash);
+  const seriesN = Object.keys(dash);
   return (
+    <>
     <div>Dashboard Comming soon</div>
+    <DonutChart labelNames={seriesN} seriesValues={seriesV}/>
+    </>
   )
 }
