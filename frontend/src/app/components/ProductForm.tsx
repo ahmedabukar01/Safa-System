@@ -57,7 +57,10 @@ export default function ProductsForm({onSubmit}: any) {
         name="price"
         rules={[{ required: true, message: 'Please input your Price!' }]}
         >
-        <InputNumber min={0} />
+        <InputNumber 
+        type='number'
+        min={0.1} 
+        />
       </Form.Item>
       </Col>
     </Row>

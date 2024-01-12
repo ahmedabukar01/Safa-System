@@ -11,9 +11,8 @@ import { SuperAdminOnly } from "../components/auth/AdminOnly";
 
 const {Title} = Typography
 export default function SuperPage() {
-  // const router = useRouter()
-  // const userRole = useSelector((state) => state.UserInfo.role);
   const [register] = useMutation(RegisterUser)
+  const userRole = useSelector((state) => state.UserInfo.role);
 
   SuperAdminOnly()
   // if(userRole !== "SUPER_ADMIN"){
@@ -45,7 +44,7 @@ export default function SuperPage() {
   return (
     <>
     {
-      value === "SUPER_ADMIN" && (
+      userRole === "SUPER_ADMIN" && (
         <div>
         <Title level={2} style={center}>Register New Client</Title>
     

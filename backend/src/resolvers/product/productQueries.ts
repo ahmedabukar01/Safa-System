@@ -4,7 +4,6 @@ import { getYourData } from "../../utils/getYourData";
 
 export const productQueries = {
     products: async (_:any, {}, {__, ___, user}: any) => {
-        console.log('the user ',user)
         auth(user);
 
         const yourData = getYourData(user);

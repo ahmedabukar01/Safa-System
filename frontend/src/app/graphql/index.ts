@@ -90,8 +90,8 @@ export const SavePaymentReport = gql` mutation CreatePayment($input: PaymentInpu
   }
 }`
 
-export const AllPaymentReport = gql` query {
-    payments {
+export const AllPaymentReport = gql` query Payments($filters: Filters){
+    payments(filters: $filters){
     id
     total
     createdAt
@@ -102,6 +102,15 @@ export const AllPaymentReport = gql` query {
       productName
     }
   }
+}`
+
+export const PaymentDash = gql` query {
+  paymentsReport{
+  items {
+    amount
+    productName
+  }
+}
 }`
 
 export const FindPayment = gql` query FindPayment($findPaymentId: ID!) {
@@ -145,6 +154,7 @@ export const GetMe = gql` query {
   role
   adminBy
   fullName
+  brandName
   id
   access
   lastLogged
@@ -164,5 +174,23 @@ export const RegisterUser = gql` mutation Register($input: UserInput) {
 export const ChangePasswordMutation = gql` mutation ChangePassword($input: ChangePasswordInput!) {
   changePassword(input: $input) {
     success
+  }
+}`
+
+// print
+export const UpdateBrandName = gql` mutation UpdateBrandName($input: UpdateBrandNameInput) {
+  updateBrandName(input: $input) {
+    success
+  }
+}`
+
+// dashboard
+export const dashboardCount = gql` query {
+  dashCount {
+    numOfCategoreis,
+    numOfPayments,
+    numOfProducts,
+    numOfUsers
+
   }
 }`

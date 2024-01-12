@@ -1,17 +1,18 @@
 "use client"
 import { project } from '@/app/utils/config';
 import { Breadcrumb, Layout, Menu, Space, theme } from 'antd';
+import Link from 'next/link';
 
 const { Header, Content, Footer } = Layout;
 
 const tabs = [
     {
         key: 1,
-        label: `Create New User`
+        label: <Link href={"/saasoffice/"}>Create New User</Link>
     },
     {
         key: 2,
-        label: `View Users`
+        label: <Link href={"/saasoffice/view"}>View Users</Link>
     },
     {
         key: 3,
@@ -29,7 +30,7 @@ const ManagementLayout: any = ({children}: any) => {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['2']}
+          defaultSelectedKeys={['1']}
           items={tabs.map((item) => item)}
           style={{display: "flex", justifyContent: "center"}}
         />

@@ -7,6 +7,7 @@ import Loading from '../loading';
 import { Col, Descriptions, Row, Typography } from 'antd';
 import { center } from '../css/styles';
 import { formatDate } from '../components/utils/Dates';
+import UpdateBrandComponent from '../components/auth/UpdateBrand';
 
 const {Title} = Typography;
 
@@ -17,12 +18,20 @@ export default function Profile() {
     <div>
     <Title level={1} style={{...center}}>Your Info</Title>
     </div>
-    <Descriptions>
+    <Descriptions
+    contentStyle={{minWidth: "350px"}}
+    labelStyle={{}}
+    >
       <Descriptions.Item label="FullName">{data?.me?.fullName}</Descriptions.Item> <br />
       <Descriptions.Item label="Email">{data?.me?.email}</Descriptions.Item> <br />
+      <Descriptions.Item label="BrandName">{data?.me?.brandName}</Descriptions.Item> <br />
       <Descriptions.Item label="Role">{data?.me?.role}</Descriptions.Item> <br />
       <Descriptions.Item label="Joined">{formatDate(data?.me?.createdAt)}</Descriptions.Item>
     </Descriptions>
+    <div style={{textAlign: "center"}}>
+      <UpdateBrandComponent />
+    </div>
     </>
+
   )
 }

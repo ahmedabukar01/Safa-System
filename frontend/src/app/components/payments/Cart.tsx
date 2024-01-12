@@ -6,11 +6,33 @@ import { SavePaymentReport } from '@/app/graphql';
 import Loading from '@/app/loading';
 import { Suspense } from 'react';
 import { GreenLight, RedLight, WarningAlert } from '../utils/alerts';
+import { Printer } from './Printer';
+import { useReactToPrint } from 'react-to-print';
+import { formatDateTime } from '../utils/Dates';
 
 const {Title} = Typography
 
+const columnsToPrint = [
+  {
+    title: "Product Name",
+    key: "pro name",
+    dataIndex: "productName"
+  },
+  {
+    title: "Price",
+    key: "price",
+    dataIndex: "price"
+  },
+  {
+      title: "Amount",
+      key: "Amount",
+      dataIndex: "amount",
+  }
+]
+
 export default function Cart({cart, setCart}: any) {
   const [totalCart, setTotalCart] = React.useState<any>([]);
+  const componentRef = React.useRef(null);
   const [createPayment] = useMutation(SavePaymentReport)
 
   React.useEffect(() => {
@@ -138,6 +160,12 @@ export default function Cart({cart, setCart}: any) {
       setCart([]) // @also clear lcoalStorage.
     }
 
+    const handlePrint = useReactToPrint({
+      content: () => componentRef.current,
+    });
+
+    const brandName = JSON?.parse(localStorage?.getItem("brandName")!) || "Company Name";
+
   return (
     <div style={{...center}}>
       <Divider />
@@ -148,7 +176,15 @@ export default function Cart({cart, setCart}: any) {
               <Title level={4}>Cart Items</Title>
               <Table columns={columns} dataSource={data} />
               <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
+
+              <div ref={componentRef} className='print' style={{textAlign: "center", padding: "20px, 10px"}}>
+              <p>Date: {formatDateTime(Date())}</p>
+              <Title level={4}>{brandName}</Title>
+              <Table columns={columnsToPrint} dataSource={totalCart} />
+              <Title level={5} style={center}>Total: {localStorage.getItem("total")}</Title>
+              </div>
               <Button onClick={onFinish} type='primary' style={{background: "#22bb33"}}>Finish Checkout</Button>
+              <Button onClick={handlePrint} type='primary' style={{marginLeft: "10px"}}>Print</Button>
             {/* </Suspense> */}
          </>
         )

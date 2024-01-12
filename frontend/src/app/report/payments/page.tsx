@@ -2,11 +2,20 @@
 import React from 'react'
 import { AllPaymentReport } from '@/app/graphql'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { Button, Space, Table, Typography } from 'antd'
-import { formatDate } from '@/app/components/utils/Dates'
+import { Button, DatePicker, Divider, Space, Table, Typography } from 'antd'
+import { formatDate, formatDateString } from '@/app/components/utils/Dates'
 import { ColumnSorter } from '@/app/components/utils/general'
 import ReportDetails from '@/app/components/payments/ReportDetails'
 import Link from 'next/link'
+import { center } from '@/app/css/styles'
+
+const {RangePicker} = DatePicker
+const dateFormat = 'YYYY-MM-DD';
+
+interface FilterType {
+  startDate: String | undefined
+  endDate: String | undefined
+}
 
 const {Title} = Typography;
 
@@ -44,14 +53,50 @@ const columns = [
   ]
 
 export default function PaymentReport() {
-    const {data, networkStatus} = useSuspenseQuery(AllPaymentReport);
-    console.log('dd', data);
+  const [filters, setFilters] = React.useState<FilterType>();
+    const {data, networkStatus} = useSuspenseQuery(AllPaymentReport,  
+      {
+      fetchPolicy: "no-cache",
+      variables: {
+        filters: {
+          ...filters
+        }
+      }
+    }
+      );
+
+      const dateOnChange = (d: any) => {
+        
+        if (d === null) {
+          setFilters({
+            ...filters,
+            startDate: undefined,
+            endDate: undefined,
+          });
+        } else {
+          const sd = d[0].$d;
+          const ed = d[1].$d;
+    
+          const start = formatDateString(sd);
+          const end = formatDateString(ed);
+    
+          setFilters({
+            ...filters,
+            startDate: start,
+            endDate: end,
+          });
+        }
+      }
+
   return (
     <>
-    <Space>
+      <div style={center}>
       <Title level={2}>Your Latest Transections</Title>
-    </Space>
-    <Table columns={columns} dataSource={data?.payments} />
+      <Divider />
+      Pick Date Range: <RangePicker format={dateFormat} onChange={dateOnChange} />
+      <br/> <br />
+      </div>
+      <Table columns={columns} dataSource={data?.payments} />
     </>
   )
 }
