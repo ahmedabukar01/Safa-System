@@ -64,7 +64,7 @@ const server = new ApolloServer({
     resolvers, 
     typeDefs,
     csrfPrevention: true,
-    // introspection: false,
+    introspection: false,
     cache: new InMemoryLRUCache({
         maxSize: 1024, // limit the cache size to 1024 MB
     }),
