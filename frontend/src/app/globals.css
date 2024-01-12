@@ -117,3 +117,9 @@ a {
     color-scheme: dark;
   }
 }
+
+@media screen {
+  .print{
+    display: none;
+  }
+}

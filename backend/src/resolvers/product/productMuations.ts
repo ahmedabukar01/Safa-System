@@ -24,8 +24,6 @@ export const productMutaion = {
                 // }
             }
             )
-    
-            console.log('data', data)
 
             return data
         } catch (error) {
@@ -42,7 +40,6 @@ export const productMutaion = {
         }
     },
     updateProduct: async (_:any, {input}: any, {__, ___, user}: any) => {
-        console.log('user', user)
         auth(user);
         adminOnly(user)
 
@@ -69,8 +66,6 @@ export const productMutaion = {
 
     },
     deleteProduct: async (_:any, {id}: any, {__, ___, user}: any) => {
-
-        console.log('user del', user)
         auth(user);
         adminOnly(user);
 

@@ -20,6 +20,7 @@ import { ALLOWED_HOSTS } from "./config";
 import { authQuery } from "./resolvers/auth/authQuery";
 import { paymentMutations } from "./resolvers/payments/paymentMutations";
 import { paymentQueries } from "./resolvers/payments/paymentQuery";
+import { DashboardQueries } from "./resolvers/dashboard/dashboardQueries";
 
 dotenv.config()
 
@@ -39,7 +40,8 @@ const resolvers = {
         ...usersQuery,
         ...categoryQuery,
         ...productQueries,
-        ...paymentQueries
+        ...paymentQueries,
+        ...DashboardQueries
         // ...authQuery
     },
     Mutation: {
@@ -62,6 +64,7 @@ const server = new ApolloServer({
     resolvers, 
     typeDefs,
     csrfPrevention: true,
+    introspection: false,
     cache: new InMemoryLRUCache({
         maxSize: 1024, // limit the cache size to 1024 MB
     }),

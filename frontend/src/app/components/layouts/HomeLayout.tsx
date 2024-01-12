@@ -18,6 +18,8 @@ import Link from 'next/link';
 import ProfileBadge from '../utils/Profile';
 import { useDispatch, useSelector } from 'react-redux';
 import { project } from '@/app/utils/config';
+// import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography
@@ -67,6 +69,8 @@ const LayoutTheme: any = ({children}:any) => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+
+
   // const myToken = theme.useToken();
   // console.log('default antd colors', myToken)
 
@@ -97,7 +101,11 @@ const LayoutTheme: any = ({children}:any) => {
     <Layout style={{ minHeight: '100vh' }} >
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['2']} mode="inline" items={perMittedMenu} 
+        <Menu 
+        theme="dark" 
+        mode="inline" 
+        // selectedKeys={}
+        items={perMittedMenu} 
         style={{
           // color: project.theme.colorPrimary,
           // background: project.theme.secondaryColor

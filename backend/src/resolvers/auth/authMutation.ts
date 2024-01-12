@@ -58,14 +58,15 @@ export const authMutation = {
                 httpOnly: true,
                 secure: true,
                 sameSite: "none",
-                maxAge:  1000 * 60 * 60 * 24, // 1000 * 60 = one munite. // 1000 * 60 * 60 * 24 * 7 = 7 days 
+                maxAge:  1000 * 60 * 60 * 18, // 1000 * 60 = one munite. // 1000 * 60 * 60 * 24 * 7 = 7 days 
                 // secure: process.env.NODE_ENV === 'production',
         
             })
 
             // lastlogged
             const now = new Date();
-            user.email !== "ahmed@gmail.com" && await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
+            await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
+            // user.email !== "ahmed@gmail.com" && await prisma.users.update({data: {lastLogged: now}, where: {id: user.id}})
 
             return {
                 token,

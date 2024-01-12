@@ -4,7 +4,6 @@ import { getYourData } from "../../utils/getYourData";
 
 export const categoryQuery = {
     categories: async (_:any, {}, {__, ___, user}: any) => {
-        console.log('the user ',user)
         auth(user);
 
         const yourData = getYourData(user);
