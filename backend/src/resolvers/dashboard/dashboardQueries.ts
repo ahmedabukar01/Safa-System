@@ -6,7 +6,6 @@ import { getYourData } from "../../utils/getYourData";
 export const DashboardQueries = {
     dashCount: async (_: any, {input}: any, {__,___, user}: any) => {
         auth(user);
-        // adminOnly(user);
 
         const yourId = getYourData(user);
 
