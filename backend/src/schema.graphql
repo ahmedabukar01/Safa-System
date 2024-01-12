@@ -7,6 +7,7 @@ scalar Date
     role: Role!
     email: String!
     adminBy: String
+    brandName: String
     password: String!
     access: Boolean
     lastLogged: Date
@@ -87,6 +88,9 @@ scalar Date
     items: [OrderInfoInput]
     total: Float
   }
+   input UpdateBrandNameInput {
+    brandName: String
+  }
 
   input UpdateProductInput {
   productID: String
@@ -133,6 +137,13 @@ scalar Date
     access: String
   }
 
+  type dashboard {
+    numOfCategoreis: Int 
+    numOfProducts: Int 
+    numOfUsers: Int
+    numOfPayments: Int
+  }
+
 
   type Query {
     users: [User!]!
@@ -144,6 +155,8 @@ scalar Date
     payments(filters: Filters): [Payment]
     findPayment(id: ID!): Payment
     adminsOnly: [User]!
+    dashCount: dashboard
+    paymentsReport: [Payment]
     # refreshToken: StatusMessage
 
     # development only
@@ -162,6 +175,7 @@ scalar Date
     logout: StatusMessage
     createPayment(input: PaymentInput!): StatusMessage
     changePassword(input: ChangePasswordInput!): StatusMessage
+    updateBrandName(input: UpdateBrandNameInput): StatusMessage
 
     # super user mutations
     register(input: UserInput): Payload  
