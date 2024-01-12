@@ -1,17 +1,15 @@
 "use client"
 import ReactApexChart from "react-apexcharts";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
 export const DonutChart = ({seriesValues, labelNames}: any) => {
-
-  console.log()
-    // const series = [44, 55, 41, 17, 15];
   
     const  options = {
               chart: {
                 type: 'donut',
               },
               labels: labelNames,
+              // series: seriesValues,
               plotOptions: {
                 pie: {
                   donut: {
@@ -34,6 +32,6 @@ export const DonutChart = ({seriesValues, labelNames}: any) => {
           }  
 
   return (
-    <ReactApexChart options={options} series={seriesValues} type="donut" />
+    <ReactApexChart options={options} series={seriesValues} type="donut"/>
   )
 }

@@ -6,7 +6,7 @@ import { getYourData } from "../../utils/getYourData";
 export const DashboardQueries = {
     dashCount: async (_: any, {input}: any, {__,___, user}: any) => {
         auth(user);
-        adminOnly(user);
+        // adminOnly(user);
 
         const yourId = getYourData(user);
 
@@ -37,8 +37,6 @@ export const DashboardQueries = {
         const numOfProducts = products.length;
         const numOfUsers = users.length;
         const numOfPayments = payments.length;
-
-        console.log(numOfCategoreis, numOfPayments, numOfProducts, numOfUsers)
 
         return {
             numOfCategoreis,
